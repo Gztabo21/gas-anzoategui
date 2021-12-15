@@ -18,5 +18,6 @@
     <link rel="stylesheet" href="./assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="./assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="./assets/css/main.css" />
+    <link rel="stylesheet" href="./assets/css/customer.css" />
   </head>
   <body>

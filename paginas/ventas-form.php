@@ -1,75 +1,132 @@
 <div class="row">
 <div class="col-lg-6">
                 <div class="form-wrapper">
-                  <form action="#" method="POST" >
+                  <form action="#" method="POST" id="form" >
                     <div class="row">
-                      <div class="col-12">
+                      <div class="col-6">
                         <div class="input-style-1">
                           <label>Cliente</label>
                           <input type="email" id="email" name="email" placeholder="Email" />
-                          <a class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="lni lni-user"></i> Nuevo Cliente</a>
+                          <a   data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="lni lni-user"></i> Nuevo Cliente</a>
                         </div>
                       </div>
                       <!-- end col -->
-                      <div class="col-12">
+                      <div class="col-6">
                         <div class="input-style-1">
-                          <label>Password</label>
+                          <label> Pago </label>
                           <input type="password" id="contrasena" name="contrasena" placeholder="Password" />
                         </div>
                       </div>
-                      <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
-                        <div class="form-check checkbox-style mb-30">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            id="checkbox-remember"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="checkbox-remember"
-                          >
-                            Remember me next time</label
-                          >
-                        </div>
-                      </div>
-                      <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
+                    </div>
+                    <div class="col-12">
                         <div
                           class="
-                            text-start text-md-end text-lg-start text-xxl-end
-                            mb-30
-                          "
-                        >
-                          <a href="#0" class="hover-underline"
-                            >Forgot Password?</a
-                          >
-                        </div>
-                      </div>
-                      <!-- end col -->
-                      <div class="col-12">
-                        <div
-                          class="
+         
                             button-group
                             d-flex
-                            justify-content-center
+                            justify-content-end
                             flex-wrap
                           "
                         >
                           <button
                             class="
-                              main-btn
+                              btn
                               primary-btn
                               btn-hover
-                              w-100
+                              w-10
                               text-center
                             "
                             type="submit"
                           >
-                            Iniciar
+                            Crear
                           </button>
                         </div>
+                      </div>
+                    <div class="row">
+                    <div class='table-responsive'>
+                        <table class='table top-selling-table'>
+                          <thead>
+                            <tr>
+                              <th>
+                                <h6 class='text-sm text-medium'>Products</h6>
+                              </th>
+                              <th class='min-width'>
+                                <h6 class='text-sm text-medium'>
+                                  Cantidad 
+                                </h6>
+                              </th>
+                              <th class='min-width'>
+                                <h6 class='text-sm text-medium'>
+                                  Precio Unitario 
+                                </h6>
+                              </th>
+                              <th class='min-width'>
+                                <h6 class='text-sm text-medium'>
+                                  Total 
+                                </h6>
+                              </th>
+                              <th>
+                                <h6 class='text-sm text-medium text-end'>
+                                  Actions 
+                                </h6>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div class='product'>
+                                  <div class='image'>
+                                   
+                                  </div>
+                                  <p class='text-sm'>Bedroom</p>
+                                </div>
+                              </td>
+                              <td>
+                              <p class='text-sm text-medium '>1</p>
+                              </td>
+                              <td>
+                                <p class='text-sm'>$345</p>
+                              </td>
+                              <td>
+                              <p class='text-sm'>$345</p>
+                              </td>
+                              <td>
+                                <div class='action justify-content-end'>
+                                  <button class='edit'>
+                                    <i class='lni lni-pencil'></i>
+                                  </button>
+                                  <button
+                                    class='more-btn ml-10 dropdown-toggle'
+                                    id='moreAction1'
+                                    data-bs-toggle='dropdown'
+                                    aria-expanded='false'
+                                  >
+                                    <i class='lni lni-more-alt'></i>
+                                  </button>
+                                  <ul
+                                    class='dropdown-menu dropdown-menu-end'
+                                    aria-labelledby='moreAction1'
+                                  >
+                                    <li class='dropdown-item'>
+                                      <a href='#0' class='text-gray'>Remove</a>
+                                    </li>
+                                    <li class='dropdown-item'>
+                                      <a href='#0' class='text-gray'>Edit</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="" id="total">
+                        <label>Total</label>
+                        <label>$000</label>
                       </div>
                     </div>
                     <!-- end row -->
@@ -130,31 +187,7 @@
                       </div>
                      
                       <!-- end col -->
-                      
-                      <div class="col-12">
-                        <div
-                          class="
-                            button-group
-                            d-flex
-                            justify-content-center
-                            flex-wrap
-                          "
-                        >
-                          <button
-                            class="
-                              main-btn
-                              primary-btn
-                              btn-hover
-                              w-100
-                              text-center
-                            "
-                            type="submit"
-                          >
-                            Iniciar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
+                    
                     <!-- end row -->
                   </form>
                   

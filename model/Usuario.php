@@ -13,7 +13,7 @@ class Usuario extends Conexion{
         $this->conexion =  $this->conexion->connect();  
     }
 
-    function insertUsuario(string $nombre_completo, string $contrasena, int $cedula, string $email ){
+    public function insertUsuario(string $nombre_completo, string $contrasena, int $cedula, string $email ){
 
         $this->nombre_completo = $nombre_completo;
         $this->contrasena = md5($contrasena);
@@ -33,4 +33,5 @@ class Usuario extends Conexion{
         $request = $exe->fetchall(PDO::FETCH_ASSOC);
         return $request;
     }
+    
 }

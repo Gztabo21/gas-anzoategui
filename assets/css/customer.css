@@ -1,0 +1,7 @@
+.error-response{
+    color:red;
+    text-transform: capitalize;
+    font-weight: bold;
+    text-align: center;
+    margin:.75rem;
+}

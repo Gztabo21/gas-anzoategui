@@ -5,6 +5,8 @@ $pw = isset($_POST['contrasena'])?$_POST['contrasena']:'';
 
 
 $verification = new auth;
-$verification->login($email,$pw)
+$data = $verification->login($email,$pw);
+echo(json_encode($data));
+http_response_code($data['code']);
 
 ?>

@@ -10,6 +10,7 @@
     <script src="assets/js/world-merc.js"></script>
     <script src="assets/js/polyfill.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/customer.js"></script>
 
   </body>
 </html>
