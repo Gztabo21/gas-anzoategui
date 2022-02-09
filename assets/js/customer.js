@@ -1,3 +1,9 @@
+let auth = window.localStorage.getItem('auth')
+// console.log(window.location.pathname)
+if(!auth && window.location.pathname !== "/gas-anzoategui/signin.php"){
+    console.log(window.location)
+    window.location.href="./signin.php"
+}
 const valida ={
     'email':validarEmail,
     'number':validarNumber,
@@ -5,7 +11,7 @@ const valida ={
     'required':validarRequired
 }
 const $form = document.querySelector("#form");
-$form.addEventListener('submit',validarForm);
+if($form) $form.addEventListener('submit',validarForm);
 
 function validarfield(e){
     if(e.target.attributes.hasOwnProperty('validar')){
@@ -48,10 +54,12 @@ function validarRequired(e){
 }
 
 async function validarForm(e){
-    
+    let formSignIn = document.getElementById('form')
     e.preventDefault()
+    if(formSignIn){
     
     const form = new FormData(this)
+    console.log(form);
     const resp = await fetch(this.action,{
         method:this.method,
         body:form,
@@ -64,6 +72,9 @@ async function validarForm(e){
     // await resp.json()
     if(resp.ok){
         //this.reset();
+        console.log(json)
+        window.localStorage.setItem('auth', json.id);
+
         window.location.href="http://localhost/gas-anzoategui/?p=ventas"
     }
     if(!resp.ok){
@@ -72,5 +83,5 @@ async function validarForm(e){
         document.getElementById('error-response').className ='error-response';
         alert(json.message);
     }
-
+}
 }

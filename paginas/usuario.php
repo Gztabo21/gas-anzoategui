@@ -1,4 +1,4 @@
-<a  href="?p=cliente-form" class="btn btn-primary">Nueva</a>
+<a  href="?p=usuario-form" class="btn btn-primary">Nueva</a>
 
 
 <div
@@ -29,13 +29,13 @@
                       
                         
                         <th>
-                          <h6 class='text-sm text-medium text-end'>
+                          <h6 class='text-sm text-medium'>
                             Actiones 
                           </h6>
                         </th>
                       </tr>
                     </thead>
-                    <tbody id="Clientes">
+                    <tbody id="Usuarios">
                    
                     </tbody>
                   </table>

@@ -11,17 +11,7 @@ echo"<div
                   <div class='left'>
                     <h6 class='text-medium mb-30'>Sales History</h6>
                   </div>
-                  <div class='right'>
-                    <div class='select-style-1'>
-                      <div class='select-position select-sm'>
-                        <select class='light-bg'>
-                          <option value=''>Today</option>
-                          <option value=''>Yesterday</option>
-                        </select>
-                      </div>
-                    </div>
-          
-                  </div>
+                  
                 </div>
          
                 <div class='table-responsive'>

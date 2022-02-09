@@ -34,4 +34,31 @@ class Usuario extends Conexion{
         return $request;
     }
     
+    public function update(int $id , string $nombre_completo, int $cedula, string $email  ){        
+        $this->nombre_completo = $nombre_completo;
+        $this->cedula = $cedula;
+        $this->email = $email;
+
+        $sql= "UPDATE usuario SET nombre_completo=?,cedula=?,email=? where usuario_id=$id";
+        $update = $this->conexion->prepare($sql);
+        $arrData = array($this->nombre_completo,$this->cedula,$this->email);
+        $exe = $update->execute($arrData);
+        return $exe;
+    }
+
+    public  function findOne(int $id){
+        $sql="SELECT * FROM usuario where usuario_id=?";
+        $consulta = $this->conexion->prepare($sql);
+        $consulta->execute(array($id));
+        $datos = $consulta->fetchall(PDO::FETCH_ASSOC);
+
+        return $datos;
+    }
+    public  function delete(int $id){
+        $sql="DELETE FROM usuario where usuario_id=$id";
+        $delete = $this->conexion->prepare($sql);
+        $del = $delete->execute(array($id));
+        return $del;
+    }
+    
 }

@@ -39,7 +39,7 @@
                           <p id="messageValidar"></p>
                         </div>
                       </div>
-                      <p>holaa</p>
+                     
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Password</label>
@@ -47,7 +47,7 @@
                         </div>
                       </div>
                       <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
+                      <!-- <div class="col-xxl-6 col-lg-12 col-md-6">
                         <div class="form-check checkbox-style mb-30">
                           <input
                             class="form-check-input"
@@ -62,9 +62,9 @@
                             Remember me next time</label
                           >
                         </div>
-                      </div>
+                      </div> -->
                       <!-- end col -->
-                      <div class="col-xxl-6 col-lg-12 col-md-6">
+                      <!-- <div class="col-xxl-6 col-lg-12 col-md-6">
                         <div
                           class="
                             text-start text-md-end text-lg-start text-xxl-end
@@ -75,7 +75,7 @@
                             >Forgot Password?</a
                           >
                         </div>
-                      </div>
+                      </div> -->
                       <div class="col-12">
                       <p id="error-response"></p>
                       </div>

@@ -1,6 +1,6 @@
 <?php 
     require_once'./layout/head.php' ;
-    $username ="Gustavo";
+    $username ="Fares Figueroa";
     //require_once'./config/conexion.php';
     //$conex= new conexion();
     

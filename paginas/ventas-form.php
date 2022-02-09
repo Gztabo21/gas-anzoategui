@@ -1,12 +1,16 @@
 <div class="row">
-<div class="col-lg-6">
+<div class="col-lg-12">
                 <div class="form-wrapper">
                   <form action="#" method="POST" id="form" >
                     <div class="row">
                       <div class="col-6">
                         <div class="input-style-1">
                           <label>Cliente</label>
-                          <input type="email" id="email" name="email" placeholder="Email" />
+                          
+                          <select id="select-client">
+
+                          </select>
+                          <!-- <input type="email" id="email" name="email" placeholder="Email" /> -->
                           <a   data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="lni lni-user"></i> Nuevo Cliente</a>
                         </div>
                       </div>
@@ -14,7 +18,8 @@
                       <div class="col-6">
                         <div class="input-style-1">
                           <label> Pago </label>
-                          <input type="password" id="contrasena" name="contrasena" placeholder="Password" />
+                          <select id="select-tipoPago">
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -36,13 +41,27 @@
                               w-10
                               text-center
                             "
-                            type="submit"
+                            type="button"
+                           onClick="newItem()"
                           >
                             Crear
                           </button>
+                          <button
+                            class="
+                              btn
+                              primary-btn
+                              btn-hover
+                              w-10
+                              text-center
+                            "
+                            type="button"
+                           
+                          >
+                            Confirmar
+                          </button>
                         </div>
                       </div>
-                    <div class="row">
+                  <div class="row">
                     <div class='table-responsive'>
                         <table class='table top-selling-table'>
                           <thead>
@@ -72,52 +91,9 @@
                               </th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr>
-                              <td>
-                                <div class='product'>
-                                  <div class='image'>
-                                   
-                                  </div>
-                                  <p class='text-sm'>Bedroom</p>
-                                </div>
-                              </td>
-                              <td>
-                              <p class='text-sm text-medium '>1</p>
-                              </td>
-                              <td>
-                                <p class='text-sm'>$345</p>
-                              </td>
-                              <td>
-                              <p class='text-sm'>$345</p>
-                              </td>
-                              <td>
-                                <div class='action justify-content-end'>
-                                  <button class='edit'>
-                                    <i class='lni lni-pencil'></i>
-                                  </button>
-                                  <button
-                                    class='more-btn ml-10 dropdown-toggle'
-                                    id='moreAction1'
-                                    data-bs-toggle='dropdown'
-                                    aria-expanded='false'
-                                  >
-                                    <i class='lni lni-more-alt'></i>
-                                  </button>
-                                  <ul
-                                    class='dropdown-menu dropdown-menu-end'
-                                    aria-labelledby='moreAction1'
-                                  >
-                                    <li class='dropdown-item'>
-                                      <a href='#0' class='text-gray'>Remove</a>
-                                    </li>
-                                    <li class='dropdown-item'>
-                                      <a href='#0' class='text-gray'>Edit</a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </td>
-                            </tr>
+                          <tbody id="itemVenta">
+                          
+                      
                           </tbody>
                         </table>
 

@@ -1089,7 +1089,7 @@ h6,
     background: rgba(239, 239, 239, 0.5);
     border: 1px solid #e5e5e5;
     border-radius: 4px;
-    padding: 16px;
+    padding: 8px;
     color: #5d657b;
     resize: none;
     transition: all 0.3s; }
@@ -1101,7 +1101,12 @@ h6,
     .input-style-1 textarea[type="date"],
     .input-style-1 textarea[type="time"] {
       background: transparent; }
-
+.input-style-1 select{
+  padding: 8px;
+  background: rgba(239, 239, 239, 0.5);
+  color: #5d657b;
+  border: 1px solid #e5e5e5;
+}
 .input-style-2 {
   position: relative;
   margin-bottom: 30px;

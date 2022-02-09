@@ -1,5 +1,15 @@
+<div class="container-fluid" style="margin:1rem auto;" >
+<div class="row" >
+  <div class="col-6" >
+  <a  href="?p=cliente" class="btn btn-primary"><i class="lni lni-chevron-left" ></i> &nbsp;Volver</a>
+
+  </div>
+</div>
+</div>
 <div class="form-wrapper">
-                  <form action="#" method="POST" >
+                  <form id="formClient" action="./controller/cliente.php" method="POST" >
+                  <input type="hidden" id="cliente_id" name="cliente_id" />
+
                     <div class="row">
                       <div class="col-6">
                         <div class="input-style-1">
@@ -16,11 +26,24 @@
                       </div>
                       <!-- end col -->
                      
-                      <div class="col-12">
-                        <div class="input-style-1">
-                          <label>Cedula</label>
-                          <input type="text" id="cedula" name="cedula" placeholder="123456789" />
-                        </div>
+                     
+                      <div class="row">
+                          <div class="col-2">
+                            
+                            <div class="input-style-1">
+                              <label>tipo Doc</label>
+                              <select class="form-select" id="tipo_documento" name="tipo_documento" aria-label="Default select example">
+                                <option value="V">V</option>
+                                <option value="E">E</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-10">
+                            <div class="input-style-1">
+                              <label>Cedula</label>
+                              <input type="text" id="cedula" name="cedula" placeholder="123456789" />
+                            </div>
+                          </div>
                       </div>
                       <!-- end col -->
                       <div class="col-12">
@@ -41,7 +64,7 @@
                      
                       <!-- end col -->
                       
-                      <div class="col-12">
+                      <div class="col-xs-12 col-4">
                         <div
                           class="
                             button-group

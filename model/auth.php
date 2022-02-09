@@ -10,10 +10,10 @@ class auth extends Conexion{
         $this->conexion = new Conexion();
         $this->conexion =  $this->conexion->connect();
     }
-
+    // metodo de autenticacion recibe una correo y contraseña
     function login($email,$pw){
         $this->email = $email;
-        $this->pw = md5($pw); ;
+        $this->pw = md5($pw); 
         $msg_incorrect = array("message"=>"correo o clave son incorrecto.", "code"=>403);
         $msg_correct = array("message"=>"Bienvenido al sistema", "code"=>200);
         $sql="SELECT * FROM usuario where email=?";
@@ -25,7 +25,8 @@ class auth extends Conexion{
         //validar usuario
         if(isset($datos)&& !empty($datos) && sizeof($datos) > 0){
             foreach($datos as $usuario){
-                $response = $usuario['contrasena'] == $this->pw ? $msg_correct : $msg_incorrect; 
+
+                $response = $usuario['contrasena'] == $this->pw ? array("message"=>"Bienvenido al sistema", "code"=>200,"id"=>$usuario['usuario_id']) : $msg_incorrect; 
             }
         }else{
             $response = $msg_incorrect;

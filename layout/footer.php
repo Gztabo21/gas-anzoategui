@@ -5,13 +5,13 @@
             <div class="col-md-6 order-last order-md-first">
               <div class="copyright text-center text-md-start">
                 <p class="text-sm">
-                  Designed and Developed by
+                  Desarrolllado
                   <a
-                    href="https://plainadmin.com"
+                    href="#"
                     rel="nofollow"
                     target="_blank"
                   >
-                    PlainAdmin
+                 
                   </a>
                 </p>
               </div>
