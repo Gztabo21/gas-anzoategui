@@ -1,29 +1,30 @@
 <div class="row">
 <div class="col-lg-12">
                 <div class="form-wrapper">
-                  <form action="#" method="POST" id="form" >
+                  <form action="#" method="POST" id="formVenta" >
+                    <input type="hidden" name="items" />
                     <div class="row">
                       <div class="col-6">
                         <div class="input-style-1">
                           <label>Cliente</label>
                           
-                          <select id="select-client">
+                          <select id="select-client" name="select-client">
 
                           </select>
                           <!-- <input type="email" id="email" name="email" placeholder="Email" /> -->
-                          <a   data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="lni lni-user"></i> Nuevo Cliente</a>
+                          <!-- <a   data-bs-toggle="modal" data-bs-target="#exampleModal" ><i class="lni lni-user"></i> Nuevo Cliente</a> -->
                         </div>
                       </div>
                       <!-- end col -->
                       <div class="col-6">
                         <div class="input-style-1">
                           <label> Pago </label>
-                          <select id="select-tipoPago">
+                          <select id="select-tipoPago" name="select-tipoPago">
                           </select>
                         </div>
                       </div>
                     </div>
-                    <div class="col-12">
+                    <div class="col-12 ">
                         <div
                           class="
          
@@ -31,6 +32,7 @@
                             d-flex
                             justify-content-end
                             flex-wrap
+                            btns-actions
                           "
                         >
                           <button
@@ -55,7 +57,7 @@
                               text-center
                             "
                             type="button"
-                           
+                           onClick="getData()"
                           >
                             Confirmar
                           </button>
@@ -102,7 +104,7 @@
                     <div class="row">
                       <div class="" id="total">
                         <label>Total</label>
-                        <label>$000</label>
+                        <label id="amount"></label>
                       </div>
                     </div>
                     <!-- end row -->

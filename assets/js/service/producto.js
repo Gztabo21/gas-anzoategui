@@ -16,6 +16,8 @@ async function SelectProduct(){
         })
 }
 
+if(document.querySelector("#select-producto")) SelectProduct()
+
 async function tableProduct(){
     let table = d.getElementById('Productos')
     let products = await getAll('producto')

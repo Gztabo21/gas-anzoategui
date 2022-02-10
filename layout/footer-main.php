@@ -14,8 +14,9 @@
     <script src="assets/js/service/usuario.js"></script>
    
     <script src="assets/js/service/pago.js"></script>
-    <script src="assets/js/service/venta.js"></script>
-    <script src="assets/js/service/producto.js"></script>
+
+    <script src="assets/js/service/producto.js"></script> 
+       <script src="assets/js/service/venta.js"></script>
     <script src="assets/js/conection.js"></script>
     
   
