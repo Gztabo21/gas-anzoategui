@@ -53,7 +53,7 @@
             </a>
           </li>
           <li class="nav-item  <?php echo $pagina == 'usuarios' ? 'active' : '' ?>">
-            <a href="?p=usuarios">
+            <a href="?p=usuario">
               <span class="icon">
               <i class="lni lni-users"></i>
               </span>

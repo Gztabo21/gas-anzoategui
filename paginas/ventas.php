@@ -28,6 +28,11 @@
                         </th>
                         <th class='min-width'>
                           <h6 class='text-sm text-medium'>
+                            Estado
+                          </h6>
+                        </th>
+                        <th class='min-width'>
+                          <h6 class='text-sm text-medium'>
                             monto
                           </h6>
                         </th>

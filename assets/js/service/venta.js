@@ -13,13 +13,8 @@ const checkIcon = document.createElement('i');
 const banIcon = document.createElement('i');
     banIcon.className ="lni lni-ban";
 //end icon
-
+// inicial
 async function itemsVenta(){    
-    // let fila = document.createElement('tr');
-    // if(item.length == 0){
-    //     itemVenta.append(fila)
-    // }
-    
     getProductos()
 }
 const productSelected = (e) =>{
@@ -28,9 +23,9 @@ const productSelected = (e) =>{
     let precioNew = document.getElementById('precio_new');
     let subtotal = document.querySelector('#subtotal')
     qty.value = 1;
-    precioProducto = producto.precioUnitario;
-    precioNew.textContent = producto.precioUnitario;
-    subtotal.textContent = producto.precioUnitario;
+    precioProducto = producto.total;
+    precioNew.textContent = producto.total;
+    subtotal.textContent = producto.total;
 
 }
 //validacion de numero
@@ -46,7 +41,7 @@ const onlyNumber = (ev)=>{
 // select
 const select = document.createElement('select');
 select.className ="form-select";
-select.id ="products"
+select.id ="ventas"
 let option = document.createElement('option');
 option.value = 0;
 option.textContent = "Seleccione producto";
@@ -72,7 +67,7 @@ async function getProductos(){
     productos = data
     productos.forEach( p=>{
         let option = document.createElement('option');
-        option.textContent = p.nombre;
+        option.textContent = `${p.nombre} ${p.peso} ${p.unidadMetrica}`;
         option.value = p.productoId;
         select.append(option);
     })
@@ -230,3 +225,56 @@ async function sendDataItem(order){
         window.location.href=`./?p=ventas`;
     }
 }
+
+// tabla de ventas
+async function tableVentas(){
+    let table = d.getElementById('Ventas');
+    let ventas = await getAll('ventas');
+        //fila.className = "form-select"
+    ventas.data.forEach( async p=>{
+        //crear button
+        let buttonDelete = d.createElement('button');
+        buttonDelete.className ="btn btn-danger";
+        buttonDelete.textContent = "Eliminar";
+        //crear button
+        // let buttonUpdate = d.createElement('button');
+        // buttonUpdate.className ="btn btn-success";
+        // buttonUpdate.textContent = "Editar";
+        // crear filas
+        let fila = document.createElement('tr');
+        //crear columnas
+        let pedido_id = d.createElement('td');
+        let cliente_id = d.createElement('td');
+        let estado = d.createElement('td');
+        let total = d.createElement('td');
+        let fecha = d.createElement('td');
+        let actions = d.createElement('td');
+        // asigno valores de Base de datoas a las columnas
+        pedido_id.textContent = p.pedido_id ;
+        let cliente = await get(parseInt(p.cliente_id),'cliente');
+        console.log(cliente['data'][0])
+        cliente_id.textContent = `${cliente['data'][0].nombre} ${cliente['data'][0].apellido}` ;
+        estado.textContent = p.status == 1 ? "valido" :"pendiente";
+        estado.className =  p.status ? "pendiente" :"Valido";
+
+        total.textContent = p.total ;
+        fecha.textContent = p.fecha;
+        buttonDelete.id = p.pedido_id;
+        //buttonUpdate.id = p.pedido_id;
+        // agregar evento al botton 
+        buttonDelete.dataValue = "ventas"; // vista lista del modulo
+        buttonDelete.message = `Desea eliminar el pedido ${p.pedido_id} del Cliente ${cliente['data'][0].nombre} ${cliente['data'][0].apellido}`;
+        buttonDelete.addEventListener('click',confirmDelete)
+        //buttonUpdate.addEventListener('click',updateDatos)
+        //buttonUpdate.dataValue = "producto-form";
+        actions.className="btns-actions";
+        // agrego boton a las columna
+        actions.append(buttonDelete)
+        // agrego las columnas a la fila
+        fila.append(pedido_id,cliente_id,estado,total,fecha,actions);
+        // agrego las fila a la columna
+        table.append(fila);
+    }) 
+}
+// activa la funcion tableVentas cuando encuentra a elemento con un ID "Ventas"
+if(d.getElementById('Ventas')) tableVentas() 

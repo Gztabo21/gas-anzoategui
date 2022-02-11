@@ -39,19 +39,20 @@ function get(){
     $idDelete = !empty($_GET['DELETEID']) ? $_GET['DELETEID'] : 0 ;  
     $Pedido = new Pedido(); // conexion a la DDBB (BASE DE DATOS).
     // traer todos los datos.
-    if($id == 0){
+    if($id == 0 && $idDelete == 0 ){
         $resp = $Pedido->getAll();
-        echo $resp;
+        echo json_encode(['data'=>$resp]);
     }
     // consultar por un pedido
     if($id>0){
         $resp = $Pedido->finOne($id);
-        echo $resp;
+        echo json_encode(['data'=>$resp]);
     }
     // eliminar pedido
     if($idDelete > 0){
+
         $resp = $Pedido->delete($id);
-        echo $resp;
+        echo json_encode(['data'=>"delete"]);
     }
     
 }

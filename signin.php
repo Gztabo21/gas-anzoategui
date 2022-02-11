@@ -13,8 +13,11 @@
                     <h1 class="text-primary mb-10">Bievenido al sistema</h1>
                    
                   </div>
+                  <div class="logo-signin">
+                    <img src="assets/images/logo/logo.png"  alt="" />
+                  </div>
                   <div class="cover-image">
-                    <img src="assets/images/auth/signin-image.svg" alt="" />
+                    <img src="assets/images/auth/signin.jpeg" id="img-main" alt="" />
                   </div>
                   <div class="shape-image">
                     <img src="assets/images/auth/shape.svg" alt="" />
@@ -26,10 +29,10 @@
             <div class="col-lg-6">
               <div class="signin-wrapper">
                 <div class="form-wrapper">
-                  <h6 class="mb-15">inicia Sesion</h6>
-                  <p class="text-sm mb-25">
-                    sistema administrativo.
-                  </p>
+                  <h2 class="mb-15">Inicia Sesion</h2>
+                  <h6 class="text-sm mb-25">
+                    Sistema administrativo de GAS ANZOATEGUI.
+                  </h6>
                   <form id="form" action="./controller/login.php" method="POST" >
                     <div class="row">
                       <div class="col-12">

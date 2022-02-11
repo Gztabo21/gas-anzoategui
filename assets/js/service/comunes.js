@@ -83,3 +83,11 @@ async  function  EditForm(model,fnction){
     }  
     
 }
+
+function cerrarSession(){
+   let confirm = window.confirm( "¿Desea cerrar session ?" ) ;
+   if(confirm){
+       window.localStorage.removeItem('auth');
+       window.location.href="./signin.php";
+   }
+}
