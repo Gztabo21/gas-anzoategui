@@ -5,6 +5,8 @@ let productos = [];
 let producto ;
 let precioProducto = 0.00 ;
 let total = 0.00;
+moment.locale('es');
+
 const itemVenta = document.getElementById('itemVenta');
 
 // icon
@@ -258,7 +260,7 @@ async function tableVentas(){
         estado.className =  p.status ? "pendiente" :"Valido";
 
         total.textContent = p.total ;
-        fecha.textContent = p.fecha;
+        fecha.textContent = moment(p.fecha).format("MMM DD YYYY");
         buttonDelete.id = p.pedido_id;
         //buttonUpdate.id = p.pedido_id;
         // agregar evento al botton 
