@@ -20,14 +20,17 @@ async function itemsVenta(){
     getProductos()
 }
 const productSelected = (e) =>{
+    console.log('entre');
     let productoId = e.target.value;
     producto = productos.find(p => p.productoId == productoId)
+    console.log(producto);
     let precioNew = document.getElementById('precio_new');
-    let subtotal = document.querySelector('#subtotal')
+    let subtotal = document.querySelector('#subtotal');
+    console.log(precioProducto);
     qty.value = 1;
-    precioProducto = producto.total;
-    precioNew.textContent = producto.total;
-    subtotal.textContent = producto.total;
+    precioProducto = producto.precioUnitario;
+    precioNew.textContent = producto.precioUnitario;
+    subtotal.textContent = producto.precioUnitario;
 
 }
 //validacion de numero
