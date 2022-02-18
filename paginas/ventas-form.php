@@ -24,6 +24,21 @@
                         </div>
                       </div>
                     </div>
+                  </div>    
+                    <!-- check -->
+                    <div class="row" >
+                    <div class="col-4">
+                          <input type="checkbox" value="" class="form-check-input" id="granel-venta" name="granel" onChange="changeGradielVenta(event)" >
+                          <label class="form-check-label" for="exampleCheck1">Granel</label>
+                    </div>
+                    <div class="col-6">
+                    <select id="select-listaPrecio" name="select-listaPrecio">
+
+                    </select>
+                    </div>
+                  </div>
+                    <!-- end check -->
+                  <div class="row">
                     <div class="col-12 ">
                         <div
                           class="

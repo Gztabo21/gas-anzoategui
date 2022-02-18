@@ -11,13 +11,7 @@
                                 <h6 class='text-sm text-medium'>
                                   Peso 
                                 </h6>
-                              </th>
-                              <th class='min-width'>
-                                <h6 class='text-sm text-medium'>
-                                  Precio Unitario 
-                                </h6>
-                              </th>
-                             
+                              </th>                             
                               <th>
                                 <h6 class='text-sm text-medium text-end'>
                                   Actions 

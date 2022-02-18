@@ -15,20 +15,22 @@ switch ($method) {
     return json_encode("error");
 }
     function add(){
-
-        $nombre = $_POST['nombre'];
-        $peso = $_POST['peso'];
-        $unidadMetrica = $_POST['unidadMetrica'];
-        $precioUnitario = $_POST['precioUnitario'];
+      $post = file_get_contents('php://input');
+      $json =json_decode($post);
+        // $nombre = $_POST['nombre'];
+        // $peso = $_POST['peso'];
+        // $unidadMetrica = $_POST['unidadMetrica'];
+        // $precioUnitario = $_POST['precioUnitario'];
         
         $objProduct = new Producto();
-        if(!$_POST['productoId']){
-        $resp = $objProduct->insert($nombre,$precioUnitario,$peso,$unidadMetrica);
-        echo($resp);
+        if(!$json->{'productoId'}){
+          
+         // var_dump($json->{'nombre'}.$json->{'listaPrecio'}.$json->{'peso'}.$json->{'unidadMetrica'}.$json->{'precioUnitario'}.$json->{'granel'});
+        $resp = $objProduct->insert($json->{'nombre'},$json->{'precioUnitario'},$json->{'peso'},$json->{'unidadMetrica'},$json->{'granel'},$json->{'listaPrecio'});
+        echo json_encode(['data'=>$resp]);
         }else{
-          $id = $_POST['productoId'];
-          $resp = $objProduct->update($id,$nombre,$precioUnitario,$peso,$unidadMetrica);
-          echo($resp);
+          $resp = $objProduct->update($json->{'productoId'},$json->{'nombre'},$json->{'precioUnitario'},$json->{'peso'},$json->{'unidadMetrica'},$json->{'listaPrecio'});
+          echo json_encode(['data'=>$resp]);
         }
 
      

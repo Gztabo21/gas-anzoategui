@@ -6,6 +6,7 @@ class Producto extends Conexion{
     private $precioUnitario;
     private $unidadMetrica;
     private $peso;
+    private $isGranel;
     private $conexion;
 
     function __construct(){
@@ -13,19 +14,28 @@ class Producto extends Conexion{
         $this->conexion =  $this->conexion->connect();  
     }
 
-    function insert(string $nombre, float $precioUnitario ,float $peso , string $unidadMetrica ){        
+    function insert(string $nombre, float $precioUnitario ,float $peso , string $unidadMetrica,int $isGranel ,array $listaPrecio){        
         $this->nombre = $nombre;
         $this->precioUnitario = $precioUnitario;
         $this->unidadMetrica = $unidadMetrica;
         $this->peso = $peso;
-        $sql= "INSERT INTO producto( nombre, precioUnitario,unidadMetrica, peso)VALUES (?,?,?,?)";
+        $this->isGranel = $isGranel;
+        $sql= "INSERT INTO producto( nombre, precioUnitario,unidadMetrica, peso,isGranel)VALUES (?,?,?,?,?)";
         $insert = $this->conexion->prepare($sql);
-        $arrData = array($this->nombre,$this->precioUnitario,$this->unidadMetrica,$this->peso);
+        $arrData = array($this->nombre,$this->precioUnitario,$this->unidadMetrica,$this->peso,$this->isGranel);
         $exe = $insert->execute($arrData);
         $idLast = $this->conexion->lastInsertId();
-        return $idLast;
+        // insertar items
+        $sqlItems = "INSERT INTO lista_precio (productoId,precio,tipo_ventaId) values(?,?,?)";
+        $insertItems = $this->conexion->prepare($sqlItems);
+ 
+        foreach ($listaPrecio as $key => $value) {
+            $arr = array((int)$idLast,$value->{'precio'},$value->{'tipo_ventaId'});
+            $exe = $insertItems->execute($arr);
+        }
+        return  array("message"=>"registro guardado correctamente", "code"=>200) ; 
     }
-    public function update(int $id , string $nombre, float $precioUnitario ,float $peso , string $unidadMetrica ){        
+    public function update(int $id , string $nombre, float $precioUnitario ,float $peso , string $unidadMetrica , array $listaPrecio){        
         $this->nombre = $nombre;
         $this->precioUnitario = $precioUnitario;
         $this->unidadMetrica = $unidadMetrica;
@@ -35,6 +45,16 @@ class Producto extends Conexion{
         $update = $this->conexion->prepare($sql);
         $arrData = array($this->nombre,$this->precioUnitario,$this->unidadMetrica,$this->peso,);
         $exe = $update->execute($arrData);
+        // insertar items
+        $sqlItems = "UPDATE lista_precio SET precio=? where productoId=$id and tipo_ventaId=?";
+        $updateItems = $this->conexion->prepare($sqlItems);
+ 
+        foreach ($listaPrecio as $key => $value) {
+            $arr = array($value->{'precio'},$value->{'tipo_ventaId'});
+            $exe = $updateItems->execute($arr);
+        }
+        return  array("message"=>"registro guardado correctamente", "code"=>200) ;
+
         return $exe;
     }
 

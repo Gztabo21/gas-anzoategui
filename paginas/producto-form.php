@@ -10,12 +10,12 @@
                         </div>
                       </div>
                       <!-- end col -->
-                      <div class="col-6">
+                      <!-- <div class="col-6">
                         <div class="input-style-1">
-                          <label>Precio</label>
-                          <input type="text" id="precio" name="precioUnitario" placeholder="0.00" />
-                        </div>
-                      </div>
+                          <label>Precio</label> -->
+                          <input type="hidden" id="precio" name="precioUnitario" value="0" placeholder="0.00" />
+                        <!-- </div>
+                      </div> -->
                       <!-- end col -->
                      
                       <div class="col-12">
@@ -28,10 +28,37 @@
                       <div class="col-12">
                         <div class="input-style-1">
                           <label>Unidad Metrica</label>
-                          <input type="text" id="unidadMetrica" name="unidadMetrica" placeholder="kg" />
+                          <input type="text" id="unidadMetrica" name="unidadMetrica" placeholder="Ejemplo: kg" />
                         </div>
                       </div>
+<!-- lista de precio -->
+                      <div class="col-12 ">
+                          <input type="checkbox" value="" class="form-check-input" id="granel" name="granel" onChange="changeGradiel(event)" >
+                          <label class="form-check-label" for="exampleCheck1">Granel</label>
+                      </div>  
 
+                      <div class='table-responsive' style="margin:1rem; max-width:80%;">
+                        <table class='table top-selling-table'>
+                          <thead>
+                            <tr>
+                              <th>
+                                <h6 class='text-sm text-medium'>Nombre</h6>
+                              </th>
+                              <th class='min-width'>
+                                <h6 class='text-sm text-medium'>
+                                  Precio
+                                </h6>
+                              </th>
+                             
+                            </tr>
+                          </thead>
+                          <tbody id="lista-precio">
+                          
+                      
+                          </tbody>
+                        </table>
+                      </div>
+<!-- end lista de precio -->
                      
                       <!-- end col -->
                       

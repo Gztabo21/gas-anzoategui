@@ -16,21 +16,23 @@ const banIcon = document.createElement('i');
     banIcon.className ="lni lni-ban";
 //end icon
 // inicial
-async function itemsVenta(){    
-    getProductos()
-}
-const productSelected = (e) =>{
-    console.log('entre');
+
+const productSelected = async (e) =>{
+    let tipoVenta = document.querySelector("#select-listaPrecio");
+    console.log(tipoVenta.value);
     let productoId = e.target.value;
+
+    let listaPrecio = await getListaPrecioPorProductoytipoVenta(e.target.value,tipoVenta.value)
+    console.log(listaPrecio['data'][0].precio);
     producto = productos.find(p => p.productoId == productoId)
-    console.log(producto);
+    // console.log(producto);
     let precioNew = document.getElementById('precio_new');
     let subtotal = document.querySelector('#subtotal');
-    console.log(precioProducto);
+    // console.log(precioProducto);
     qty.value = 1;
-    precioProducto = producto.precioUnitario;
-    precioNew.textContent = producto.precioUnitario;
-    subtotal.textContent = producto.precioUnitario;
+    precioProducto = listaPrecio['data'][0].precio;
+    precioNew.textContent = listaPrecio['data'][0].precio;
+    subtotal.textContent = listaPrecio['data'][0].precio;
 
 }
 //validacion de numero
@@ -46,7 +48,7 @@ const onlyNumber = (ev)=>{
 // select
 const select = document.createElement('select');
 select.className ="form-select";
-select.id ="ventas"
+select.id ="ventas-productos"
 let option = document.createElement('option');
 option.value = 0;
 option.textContent = "Seleccione producto";
@@ -68,13 +70,18 @@ qty.max = 100;
 qty.addEventListener('change',onChangeQty)
 
 async function getProductos(){
+    let isGranel = document.querySelector('#granel-venta');
     const {data} = await getAll('producto');
+    let boolean = {0:false,1:true} 
+    console.log(data);
     productos = data
     productos.forEach( p=>{
+        if(boolean[p.isGranel]===isGranel.checked){        
         let option = document.createElement('option');
         option.textContent = `${p.nombre} ${p.peso} ${p.unidadMetrica}`;
         option.value = p.productoId;
         select.append(option);
+        }
     })
 }
 
@@ -145,6 +152,7 @@ function updateTotal(amount , operador){
 
 function newItem(){
     if(!document.getElementById('edited')){
+        getProductos()
         let fila = document.createElement('tr')
         fila.id = "edited";
         fila.nodeValue ="edited"
@@ -175,14 +183,14 @@ function newItem(){
 
         precio.id="precio"+"_new";//append(input_precio);
         precio.textContent = precioProducto;
-        subTotal.textContent = 0;
+        subTotal.textContent = precioProducto;
         
         fila.append(name,cantidad,precio,subTotal,actionbtn);
         itemVenta.append(fila);
     }
 }
 
-if( document.getElementById('itemVenta') ) itemsVenta()  
+// if( document.getElementById('itemVenta') ) itemsVenta()  
 
 // construir data a enviar a la PHP y luego DDBB
 function getData(){
@@ -191,6 +199,8 @@ function getData(){
     let item = [];
     let selectClient = document.querySelector("#select-client");
     let selectPago = document.querySelector("#select-tipoPago");
+    let isGranel = document.querySelector("#granel-venta");
+    let tipoOrder = document.querySelector("#select-listaPrecio");
     
     for(let i = 0 ; i <= parent.length-1 ; i++){
 
@@ -209,7 +219,7 @@ function getData(){
         item.push(row);
 
     }
-    let order  = {"items":item,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":total}
+    let order  = {"items":item,"isGranel":isGranel.value ? 1 : 0,"tipoOrder":tipoOrder.value,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":total}
          sendDataItem(order);
 
 }
@@ -283,3 +293,33 @@ async function tableVentas(){
 }
 // activa la funcion tableVentas cuando encuentra a elemento con un ID "Ventas"
 if(d.getElementById('Ventas')) tableVentas() 
+
+// end lista de precios.
+async function changeGradielVenta(e){
+    let selVenta = document.querySelector('#select-listaPrecio')
+    let ventasProductos = document.querySelector('#ventas-productos');
+    console.log(ventasProductos);
+    selVenta.innerHTML = ''; // limpia los nodos hijos
+    datos = await getTipoVenta(e.target.checked,'tipoVenta');
+    loadDataSelectTipoVenta(datos)
+}
+
+function loadDataSelectTipoVenta(data){
+    let selVenta = document.querySelector('#select-listaPrecio')
+    data['data'].forEach( p=>{
+        let option = d.createElement('option');
+        option.textContent = p.nombre.toUpperCase() ;
+        option.value = p.tipo_venta_id;
+        //selVenta.value = p.tipo_venta_id;
+        selVenta.append(option); 
+    })
+    selVenta.selectedIndex = 1; // valor por default y comienza desde 0 como primera posicion.
+}
+
+async function initial(){
+    check = document.querySelector('#granel-venta');
+    datos = await getTipoVenta(check.checked,'tipoVenta');
+    loadDataSelectTipoVenta(datos)
+}
+
+if(d.getElementById('granel-venta')) initial() 

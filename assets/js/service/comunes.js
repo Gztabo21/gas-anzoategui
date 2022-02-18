@@ -18,6 +18,15 @@ async function get(id,model){
         return json
     }
 }
+async function getTipoVenta(istrue,model){
+    // model en minusculas y singular. ejemplo: usuario
+    let url = `controller/${model}.php?isGranel=${istrue}`;
+    const resp = await fetch(url);
+    let json = await resp.json()
+    if(resp.ok){
+        return json
+    }
+}
 //  eliminar elementos
 async function delItem(id,model){   
     const resp = await fetch(`./controller/${model}.php?DELETEID=${id}`,{
@@ -90,4 +99,32 @@ function cerrarSession(){
        window.localStorage.removeItem('auth');
        window.location.href="./signin.php";
    }
+}
+
+async function getListaPrecioPorProducto(productoId){
+    const resp = await fetch(`./controller/listaPrecio.php?productoId=${productoId}`,{
+        method:'GET',
+        headers:{
+            'Accept':'application/json'
+        }
+    })
+    let json = await resp.json()
+    if(resp.ok){
+        console.log(json)
+        return json
+    }
+}
+
+async function getListaPrecioPorProductoytipoVenta(productoId,tipoVenta){
+    const resp = await fetch(`./controller/listaPrecio.php?productoId=${productoId}&tipoVentaId=${tipoVenta}`,{
+        method:'GET',
+        headers:{
+            'Accept':'application/json'
+        }
+    })
+    let json = await resp.json()
+    if(resp.ok){
+        console.log(json)
+        return json
+    }
 }
