@@ -21,14 +21,8 @@ switch ($method) {
 function post(){
     $post = file_get_contents('php://input');
     $json =json_decode($post);
-    // foreach ($json->{'items'} as $key => $value) {
-    //     # code...
-    //     echo $key;
-    // }
-    // var_dump($json->{'items'}[0]);
-    // echo count($json->{'items'});
     $Pedido = new Pedido();
-    $resp = $Pedido->insertPedido($json->{'Cliente_id'},$json->{'tipo_pago'},$json->{'total'},$json->{'items'},$json->{'isGranel'},$json->{'tipoOrder'});
+    $resp = $Pedido->insertPedido($json->{'Cliente_id'},$json->{'tipo_pago'},$json->{'total'},$json->{'items'},$json->{'isGranel'},$json->{'tipoOrder'},$json->{'refPago'});
     http_response_code($resp['code']);
     echo json_encode(['data'=>$resp]);
     //echo('items'.$json->{'items'}.'cliente:'.$json->{'Cliente_id'}.'tipo_pago'.$json->{'tipo_pago'}.'total:'.$json->{'total'});

@@ -11,21 +11,32 @@ $tipoVentainforme = $_POST['select-tipoVentainforme'];
 $desde = !empty($_POST['desde']) ? $_POST['desde'] : "vacio" ;
 $hasta = !empty($_POST['hasta']) ?$_POST['hasta'] : "vacio";
 $total = 0;
+$Desde =  $desde =="vacio"? "vacio": new DateTime($desde);
+$Hasta =  $hasta =="vacio"? "vacio":new DateTime($hasta);
 
 $Pedido = new Pedido();
 $Cliente = new Cliente();
 $TipoVenta = new TipoVenta();
 $nombreCliente = "Todos";
-$resp = $Pedido->getAll();
+$resp = [];
 $tventa = $TipoVenta->getTipoDeVenta($tipoVentainforme);
 
-// var_dump($tventa);
+// cliente 
 if($cliente_id !== "#"){
     $resp = $Pedido->byCliente((int)$cliente_id,$tipoVentainforme);
     $DataCliente = $Cliente->findOne($cliente_id);
     $nombreCliente = $DataCliente[0]['nombre'].' '.$DataCliente[0]['apellido'];
+}
+// sin cliente
+if($cliente_id == "#"){
+    $resp = $Pedido->byCliente(0,$tipoVentainforme);
+}
 
-//    var_dump($resp);
+// por rango de fecha. 
+if( $desde !== "vacio" && $hasta !== "vacio" ){
+    $cliente_id == "#" ? 0 :$cliente_id;
+    $resp = $Pedido->byDate((int)$cliente_id,$tipoVentainforme,$desde,$hasta);
+    
 }
 
 
@@ -37,59 +48,100 @@ if($cliente_id !== "#"){
     $pdf->Header();
     $pdf->ln();
     // $pdf->ImprovedTable($header,$data);
-    $pdf->Cell(190,8,'Reporte por Cliente',1,10,'C');
+    $pdf->Cell(190,8,'Reporte de Ventas',1,10,'C');
     $pdf->ln();
     $pdf->Cell(38,7,'Cliente: '.strtoupper($nombreCliente),0,0,'C');
     $pdf->Cell(38,7,'','',0,'C');
     $pdf->Cell(38,7,'','',0,'C');
-    $pdf->Cell(38,7,'FECHA:'.''.date('M d  Y  ').'','B',0,'C');
+    $pdf->Cell(38,7,'FECHA: '.''.date('M d  Y  ').'','B',0,'C');
     $pdf->Cell(38,7,'','',0,'C');
     $pdf->ln();
    
     $pdf->ln();
-    if( $desde !== "vacio" && $hasta !== "vacio" ){
-
-       
-        $Desde = new DateTime($desde);
-        $Hasta = new DateTime($hasta);
+    // columnas de fechas
+    if( $desde !== "vacio" && $hasta !== "vacio" ){        
         $pdf->Cell(38,7,'Desde:'.''.date_format($Desde, 'd-m-Y ').'',0,0,'C');
         $pdf->Cell(38,7,' ',0,0,'C');
         $pdf->Cell(38,7,'Hasta'.date_format($Hasta , 'd-m-Y '),0,0,'C');
         $pdf->ln();
         }
+    // fin de columna de fechas
     $pdf->ln();
     $pdf->Cell(38,7,'Tipo de Venta: '.strtoupper($tventa[0]['nombre']),0,0,'C');
     $pdf->Cell(38,7,'',0,0,'C');
     $pdf->ln();
-    // cabecera de la tablas
-    $pdf->Cell(38,7,'Fecha',1,0,'C');
-    $pdf->Cell(28,7,'Numero Venta',1,0,'C');
-    $pdf->Cell(38,7,'productos',1,0,'C');
-    $pdf->Cell(28,7,'Cantidad',1,0,'C');
-    $pdf->Cell(20,7,'Precio Unit.',1,0,'C');
-    $pdf->Cell(38,7,'Total',1,0,'C');
     $pdf->ln();
-    
-    // contenido
- 
-    
-    foreach($resp  as $key => $value)
-    {
-        //var_dump($value);
-        $pdf->Cell(38,6,$value['fecha'],1);
-        $pdf->Cell(28,6,$value['pedido_id'],1);
-        $pdf->Cell(38,6,$value['NombreProducto'],1,0,"C");
-        $pdf->Cell(28,6,$value['cantidad'],1,0,'R');
-        $pdf->Cell(20,6,$value['precio'],1,0,'R');
-        $pdf->Cell(38,6,number_format($value['total']),1,0,'C');
-        $total= $value['total'] + $total;
-        $pdf->Ln();
+// tablas de un cliente especifico.
+    if($cliente_id !== "#"){
+        // cabecera de la tablas
+        $pdf->Cell(28,7,'Fecha',1,0,'C');
+        $pdf->Cell(28,7,'Numero Venta',1,0,'C');
+        $pdf->Cell(48,7,'productos',1,0,'C');
+        $pdf->Cell(28,7,'Cantidad',1,0,'C');
+        $pdf->Cell(20,7,'Precio Unit.',1,0,'C');
+        $pdf->Cell(38,7,'Total',1,0,'C');
+        $pdf->ln();
+        // contenido de tabla
+        foreach($resp  as $key => $value)
+        {
+            $fechaReport = new DateTime($value['fecha']);
+            $pdf->Cell(28,6,date_format($fechaReport, 'd-m-Y '),1,0,"C");
+            $pdf->Cell(28,6,$value['pedido_id'],1,0,"C");
+            $pdf->Cell(48,6,$value['NombreProducto'],1,0,"C");
+            $pdf->Cell(28,6,$value['cantidad'],1,0,'C');
+            $pdf->Cell(20,6,$value['precio'],1,0,'C');
+            $pdf->Cell(38,6,number_format($value['total']),1,0,'C');
+            $total= $value['total'] + $total;
+            $pdf->Ln();
+        }
+        // total
+            $pdf->Cell(28,6,"",0);
+            $pdf->Cell(28,6,"",0);
+            $pdf->Cell(48,6,"",0);
+            $pdf->Cell(28,6,"",0,0,'R');
+            $pdf->Cell(20,6,"",0,0,'R');
+            $pdf->Cell(38,6,"Total: ".number_format($total),1,0,'C');
+        // total
     }
-    $pdf->Cell(38,6,"",0);
-        $pdf->Cell(28,6,"",0);
-        $pdf->Cell(38,6,"",0);
-        $pdf->Cell(28,6,"",0,0,'R');
-        $pdf->Cell(20,6,"",0,0,'R');
-        $pdf->Cell(38,6,"Total: ".number_format($total),1,0,'C');
+//  fin tablas de un cliente especifico.
+
+//  tablas de todos los clientes
+    if($cliente_id == "#"){
+        // cabecera de la tablas
+            $pdf->Cell(28,7,'Fecha',1,0,'C');
+            $pdf->Cell(28,7,'Cliente',1,0,'C');
+            $pdf->Cell(28,7,'Numero Venta',1,0,'C');
+            $pdf->Cell(28,7,'productos',1,0,'C');
+            $pdf->Cell(28,7,'Cantidad',1,0,'C');
+            $pdf->Cell(20,7,'Precio Unit.',1,0,'C');
+            $pdf->Cell(28,7,'Total',1,0,'C');
+            $pdf->ln();
+            // contenido de tabla
+        foreach($resp  as $key => $value)
+        {
+            $fechaReport = new DateTime($value['fecha']);
+            $pdf->Cell(28,6,date_format($fechaReport, 'd-m-Y '),1,0,"C");
+            $pdf->Cell(28,6,$value['nombre']."".$value['apellido'],1,0,"C");
+            $pdf->Cell(28,6,$value['pedido_id'],1,0,"C");
+            $pdf->Cell(28,6,$value['NombreProducto'],1,0,"C");
+            $pdf->Cell(28,6,$value['cantidad'],1,0,'C');
+            $pdf->Cell(20,6,$value['precio'],1,0,'C');
+            $pdf->Cell(28,6,number_format($value['total']),1,0,'C');
+            $total= $value['total'] + $total;
+            $pdf->Ln();
+        }
+         // total
+            $pdf->Cell(28,6,"",0);
+            $pdf->Cell(28,6,"",0);
+            $pdf->Cell(28,6,"",0);
+            $pdf->Cell(28,6,"",0);
+            $pdf->Cell(28,6,"",0,0,'R');
+            $pdf->Cell(20,6,"",0,0,'R');
+            $pdf->Cell(28,6,"Total: ".number_format($total),1,0,'C');
+        // total
+    }
+    // fin  tablas de todos los clientes
+    // fin de contenido.
+   
     $pdf->Output();
 ?>

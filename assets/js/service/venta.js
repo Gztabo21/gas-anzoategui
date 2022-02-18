@@ -201,6 +201,7 @@ function getData(){
     let selectPago = document.querySelector("#select-tipoPago");
     let isGranel = document.querySelector("#granel-venta");
     let tipoOrder = document.querySelector("#select-listaPrecio");
+    let refPago = document.querySelector("#refPago");
     
     for(let i = 0 ; i <= parent.length-1 ; i++){
 
@@ -219,7 +220,7 @@ function getData(){
         item.push(row);
 
     }
-    let order  = {"items":item,"isGranel":isGranel.value ? 1 : 0,"tipoOrder":tipoOrder.value,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":total}
+    let order  = {"items":item,"refPago":refPago.value ? refPago.value:"N/A","isGranel":isGranel.value ? 1 : 0,"tipoOrder":tipoOrder.value,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":total}
          sendDataItem(order);
 
 }
@@ -323,3 +324,10 @@ async function initial(){
 }
 
 if(d.getElementById('granel-venta')) initial() 
+
+// cambio de tipo de pago
+function cambiarTipoPago(ev){
+    let refPago = document.querySelector("#refPago");
+    ev.target.value === '1' ?  refPago.disabled = true : refPago.disabled = false;
+}
+// fin de cambio de tipo de pago

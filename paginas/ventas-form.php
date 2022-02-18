@@ -19,7 +19,7 @@
                       <div class="col-6">
                         <div class="input-style-1">
                           <label> Pago </label>
-                          <select id="select-tipoPago" name="select-tipoPago">
+                          <select id="select-tipoPago" name="select-tipoPago" onChange="cambiarTipoPago(event)">
                           </select>
                         </div>
                       </div>
@@ -31,10 +31,18 @@
                           <input type="checkbox" value="" class="form-check-input" id="granel-venta" name="granel" onChange="changeGradielVenta(event)" >
                           <label class="form-check-label" for="exampleCheck1">Granel</label>
                     </div>
-                    <div class="col-6">
+                    <div class="col-4">
+                    <div class="input-style-1">
                     <select id="select-listaPrecio" name="select-listaPrecio">
 
                     </select>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                  <div class="mb-3">
+                      <label for="refPago" class="form-label">Ref de pago:</label>
+                      <input type="text" class="form-control" id="refPago" name="refPago" placeholder="0000-0" disabled>
                     </div>
                   </div>
                     <!-- end check -->
