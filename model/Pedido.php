@@ -74,6 +74,13 @@ class Pedido extends Conexion{
         $del = $delete->execute(array($id));
         return $del;
     }
+
+    public function authPedido(int $id){
+        $sql="UPDATE pedido SET status=1 where pedido_id=$id";
+        $auth = $this->conexion->prepare($sql);
+        $authe = $auth->execute(array($id));
+        return $authe;
+    }
     
     // SELECT pedido.pedido_id,pedido.fecha, pedido.total, pedido_item.productoId, pedido.isGranel, producto.nombre, producto.precioUnitario,lista_precio.precio FROM pedido INNER JOIN pedido_item ON pedido.pedido_id=pedido_item.pedido_id JOIN producto ON producto.productoId = pedido_item.productoId JOIN lista_precio ON lista_precio.productoId = producto.productoId WHERE pedido.cliente_id = 1 AND lista_precio.tipo_ventaId = 1 
     public  function byCliente(int $cliente_id , int $tipo_ventaId){

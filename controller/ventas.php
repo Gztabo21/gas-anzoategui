@@ -31,6 +31,7 @@ function post(){
 function get(){
     $id = !empty($_GET['id']) ? $_GET['id'] : 0 ;  
     $idDelete = !empty($_GET['DELETEID']) ? $_GET['DELETEID'] : 0 ;  
+    $idAuthPed = !empty($_GET['AUTHPEDID']) ? $_GET['AUTHPEDID'] : 0 ;  
     $Pedido = new Pedido(); // conexion a la DDBB (BASE DE DATOS).
     // traer todos los datos.
     if($id == 0 && $idDelete == 0 ){
@@ -45,8 +46,12 @@ function get(){
     // eliminar pedido
     if($idDelete > 0){
 
-        $resp = $Pedido->delete($id);
+        $resp = $Pedido->delete($idDelete);
         echo json_encode(['data'=>"delete"]);
     }
-    
+       // Autorizar pedido
+    if($idAuthPed > 0){
+        $resp = $Pedido->authPedido($idAuthPed);
+        echo json_encode(['data'=>"delete"]);
+    }
 }

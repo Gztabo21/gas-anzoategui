@@ -52,3 +52,70 @@
                   </table>
 
                 </div>
+
+
+
+<!-- Modal Formulario cliente -->
+<div class="modal fade" id="Aprobar-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Gas | Anzoategui</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="form-wrapper">
+                  <form action="#" method="POST" >
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="input-style-1">
+                          <label>Nombre</label>
+                          <input type="text" id="nombre" name="nombre" placeholder="Nombre" />
+                        </div>
+                      </div>
+                      <!-- end col -->
+                      <div class="col-6">
+                        <div class="input-style-1">
+                          <label>Apellido</label>
+                          <input type="text" id="apellido" name="apellido" placeholder="Apellido" />
+                        </div>
+                      </div>
+                      <!-- end col -->
+                     
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Cedula</label>
+                          <input type="text" id="cedula" name="cedula" placeholder="123456789" />
+                        </div>
+                      </div>
+                      <!-- end col -->
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Telefono</label>
+                          <input type="text" id="telefono" name="telefono" placeholder="Telf:0000" />
+                        </div>
+                      </div>
+                     
+                      <!-- end col -->
+                     
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Dirección</label>
+                          <input type="text" id="direccion" name="direccion" placeholder="direccion" />
+                        </div>
+                      </div>
+                     
+                      <!-- end col -->
+                    
+                    <!-- end row -->
+                  </form>
+                  
+                </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

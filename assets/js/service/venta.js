@@ -139,7 +139,6 @@ const deleteItem = () =>{
     let filad = document.getElementById('edited');
      if(confirm){
          filad.remove();
-         console.log('Eliminado!!')
      } 
 }
 
@@ -147,7 +146,6 @@ function updateTotal(amount , operador){
     total = eval( `${amount}${operador} ${total}`);
     let totalA = document.querySelector("#amount");
     totalA.textContent = total < 0 ? (-1 * total) : total;
-    console.log(total);
 }
 
 function newItem(){
@@ -242,6 +240,27 @@ async function sendDataItem(order){
     }
 }
 
+// confirmar las venta
+
+function confirmAutorizar(e){
+    let confirm = window.confirm(e.target.message);
+    if(confirm){
+        confPedido(e.target.id, e.target.dataValue);
+    }  
+}
+
+async function confPedido(id, model){
+    const resp = await fetch(`./controller/${model}.php?AUTHPEDID=${id}`,{
+        method:'GET',
+        headers:{
+            'Accept':'application/json'
+        }
+    })
+    if(resp.ok){
+        document.location.reload();
+    }
+}
+
 // tabla de ventas
 async function tableVentas(){
     let table = d.getElementById('Ventas');
@@ -253,9 +272,16 @@ async function tableVentas(){
         buttonDelete.className ="btn btn-danger";
         buttonDelete.textContent = "Eliminar";
         //crear button
-        // let buttonUpdate = d.createElement('button');
-        // buttonUpdate.className ="btn btn-success";
-        // buttonUpdate.textContent = "Editar";
+        let buttonUpdate = d.createElement('button');
+        buttonUpdate.className ="btn btn-success";
+        buttonUpdate.textContent = "Editar";
+        buttonUpdate['data-bs-toggle']="modal" 
+        buttonUpdate['data-bs-target']="#Aprobar-Modal"
+        // button de autorizar
+        let buttonAuthorizar = d.createElement('button');
+        buttonAuthorizar.className ="btn btn-info";
+        buttonAuthorizar.textContent = "Autorizar";
+      
         // crear filas
         let fila = document.createElement('tr');
         //crear columnas
@@ -268,7 +294,7 @@ async function tableVentas(){
         // asigno valores de Base de datoas a las columnas
         pedido_id.textContent = p.pedido_id ;
         let cliente = await get(parseInt(p.cliente_id),'cliente');
-        console.log(cliente['data'][0])
+        
         cliente_id.textContent = `${cliente['data'][0].nombre} ${cliente['data'][0].apellido}` ;
         estado.textContent = p.status == 1 ? "valido" :"pendiente";
         estado.className =  p.status ? "pendiente" :"Valido";
@@ -276,22 +302,29 @@ async function tableVentas(){
         total.textContent = p.total ;
         fecha.textContent = moment(p.fecha).format("MMM DD YYYY");
         buttonDelete.id = p.pedido_id;
-        //buttonUpdate.id = p.pedido_id;
+        buttonAuthorizar.id = p.pedido_id;
+        buttonUpdate.id = p.pedido_id;
+        buttonAuthorizar.dataValue = "ventas"; // vista lista del modulo
+        buttonAuthorizar.message = `Desea Confirmar el pedido ${p.pedido_id} del Cliente ${cliente['data'][0].nombre} ${cliente['data'][0].apellido}`;
+        buttonAuthorizar.addEventListener('click',confirmAutorizar)
         // agregar evento al botton 
         buttonDelete.dataValue = "ventas"; // vista lista del modulo
         buttonDelete.message = `Desea eliminar el pedido ${p.pedido_id} del Cliente ${cliente['data'][0].nombre} ${cliente['data'][0].apellido}`;
         buttonDelete.addEventListener('click',confirmDelete)
-        //buttonUpdate.addEventListener('click',updateDatos)
-        //buttonUpdate.dataValue = "producto-form";
+        buttonUpdate.addEventListener('click',updateDatos)
+        buttonUpdate.dataValue = "ventas-form";
         actions.className="btns-actions";
-        // agrego boton a las columna
-        actions.append(buttonDelete)
+        // agrego boton a las columna  
+        actions.append(buttonDelete,buttonUpdate,buttonAuthorizar)
         // agrego las columnas a la fila
         fila.append(pedido_id,cliente_id,estado,total,fecha,actions);
         // agrego las fila a la columna
         table.append(fila);
     }) 
 }
+
+
+
 // activa la funcion tableVentas cuando encuentra a elemento con un ID "Ventas"
 if(d.getElementById('Ventas')) tableVentas() 
 
@@ -331,3 +364,6 @@ function cambiarTipoPago(ev){
     ev.target.value === '1' ?  refPago.disabled = true : refPago.disabled = false;
 }
 // fin de cambio de tipo de pago
+
+
+window.onload()
