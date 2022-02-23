@@ -57,11 +57,11 @@
                     class="dropdown-menu dropdown-menu-end"
                     aria-labelledby="profile"
                   >
-                    <li>
+                    <!-- <li>
                       <a href="#" onclick="reportDiario()">
                         <i class="lni lni-user"></i> View Profile
                       </a>
-                    </li>
+                    </li> -->
                     <!-- <li>
                       <a href="#0">
                         <i class="lni lni-alarm"></i> Notifications

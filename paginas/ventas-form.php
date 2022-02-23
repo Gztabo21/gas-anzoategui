@@ -3,6 +3,8 @@
                 <div class="form-wrapper">
                   <form action="#" method="POST" id="formVenta" >
                     <input type="hidden" name="items" />
+                    <input type="hidden" id="pedido_id" name="pedido_id" />
+
                     <div class="row">
                       <div class="col-6">
                         <div class="input-style-1">

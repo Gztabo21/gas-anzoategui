@@ -40,7 +40,7 @@ function get(){
     }
     // consultar por un pedido
     if($id>0){
-        $resp = $Pedido->finOne($id);
+        $resp = $Pedido->findOne($id);
         echo json_encode(['data'=>$resp]);
     }
     // eliminar pedido

@@ -61,11 +61,16 @@ class Pedido extends Conexion{
 
     public  function findOne(int $id){
         $sql="SELECT * FROM pedido where pedido_id=?";
+        $sqlitem="SELECT * FROM pedido_item where pedido_id=?";
         $consulta = $this->conexion->prepare($sql);
         $consulta->execute(array($id));
         $datos = $consulta->fetchall(PDO::FETCH_ASSOC);
+        // item
+        $consultaItem = $this->conexion->prepare($sqlitem);
+        $consultaItem->execute(array($id));
+        $items = $consultaItem->fetchall(PDO::FETCH_ASSOC);
 
-        return $datos;
+        return array('pedido'=>$datos,'items'=>$items);
     }
 
     public  function delete(int $id){
