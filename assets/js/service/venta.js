@@ -385,7 +385,7 @@ function recargarFormVenta(data){
    refPago.value = pedido['refPago']
    tipo_ventaId.value = pedido['tipo_ventaId']
 
-   console.log(total);
+//    console.log(total);
     data['items'].forEach(r=>{
         let fila = document.createElement('tr')
 
@@ -394,21 +394,15 @@ function recargarFormVenta(data){
         let precio = document.createElement('td')
         let subTotal = document.createElement('td');
 
-        let actionbtn = document.createElement('td')
-       
-        let btnAccept = document.createElement('button');
-        btnAccept.className ="btn btn-success";
-        btnAccept.append(checkIcon);
-        btnAccept.type ="button"
-        btnAccept.addEventListener('click',confirmItem)
+        let actionbtn = document.createElement('td')      
   
         let btnStop = document.createElement('button');
         btnStop.className ="btn btn-danger";
-        btnStop.append(banIcon);
+        btnStop.textContent = "Eliminar"
         btnStop.type = "button";
         btnStop.addEventListener('click',deleteItem)
   
-        actionbtn.append(btnAccept,btnStop)
+        actionbtn.append(btnStop)
          name.textContent = r.productoId;
          cantidad.textContent = r.cantidad;
          precio.textContent = r.precio_unitario;
@@ -417,7 +411,7 @@ function recargarFormVenta(data){
        
         fila.append(name,cantidad,precio,subTotal,actionbtn);
         table.append(fila);
-        console.table(r)
+        // console.table(r)
     })
 }
 //
