@@ -128,3 +128,17 @@ async function getListaPrecioPorProductoytipoVenta(productoId,tipoVenta){
         return json
     }
 }
+
+async function respaldoDDBB(){
+    const resp = await fetch(`./controller/config.php`,{
+        method:'GET',
+        headers:{
+            'Accept':'application/json'
+        }
+    })
+    let json = await resp.json()
+    if(resp.ok){
+        let url ="./ddbb/"+json['file'];
+        window.open(url, 'Download');
+    }
+}

@@ -57,11 +57,11 @@
                     class="dropdown-menu dropdown-menu-end"
                     aria-labelledby="profile"
                   >
-                    <!-- <li>
-                      <a href="#" onclick="reportDiario()">
-                        <i class="lni lni-user"></i> View Profile
+                    <li>
+                      <a href="#" onclick="respaldoDDBB()">
+                        <i class="lni lni-user"></i> Respaldar DDBB
                       </a>
-                    </li> -->
+                    </li>
                     <!-- <li>
                       <a href="#0">
                         <i class="lni lni-alarm"></i> Notifications

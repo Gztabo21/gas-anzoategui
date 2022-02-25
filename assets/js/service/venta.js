@@ -411,7 +411,6 @@ function recargarFormVenta(data){
        
         fila.append(name,cantidad,precio,subTotal,actionbtn);
         table.append(fila);
-        // console.table(r)
     })
 }
 //
