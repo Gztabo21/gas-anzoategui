@@ -41,10 +41,10 @@
                   >
                     <div class="profile-info">
                       <div class="info">
-                        <h6><?php echo($username); ?></h6> <!-- user --->
+                        <h6>Gas Anzoategui</h6> <!-- user --->
                         <div class="image">
                           <img
-                            src="assets/images/profile/profile-image.png"
+                            src="assets/images/logo/logo.png"
                             alt=""
                           />
                           <span class="status"></span>

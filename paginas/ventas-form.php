@@ -129,7 +129,9 @@
                     <div class="row">
                       <div class="" id="total">
                         <label>Total</label>
-                        <label id="amount"></label>
+                        <label id="amount">
+                          Bs. 0.00
+                        </label>
                       </div>
                     </div>
                     <!-- end row -->

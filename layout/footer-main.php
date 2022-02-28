@@ -2,6 +2,9 @@
 
     <!-- ========= All Javascript files linkup ======== -->
     <!-- <script src="assets/js/jspdf.umd.min.js"></script> -->
+    <!-- datas json -->
+    <script type="text/javascript" src="assets/js/service/data.js"></script>
+    <!-- end data Json -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/dynamic-pie-chart.js"></script>
     <script src="assets/js/moment.min.js"></script>

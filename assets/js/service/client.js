@@ -2,6 +2,9 @@ const  formClient = document.querySelector("#formClient");
 if(formClient) formClient.addEventListener('submit',submitForm);
 
 
+let cliente = []; 
+
+
 async function selectClient(){
    let data = await getAll('cliente');
    let selectClient = document.getElementById('select-client');
@@ -15,6 +18,38 @@ async function selectClient(){
 }
 
 if( document.getElementById('select-client') ) selectClient()  
+
+
+async function getVerifiedCliente(){
+    // model en minusculas y singular. ejemplo: usuario
+    let url = `controller/usuario.php?id=${localStorage.getItem('auth')}`;
+    
+    const resp = await fetch(url);
+    let json = await resp.json();
+
+    if(resp.ok){
+        usuario = json['data'][0];
+        let url_rol = `controller/rol.php?id=${usuario.rol_id}`;
+        const respDos = await fetch(url_rol);
+        let rolJson = await respDos.json();
+        let rol = rolJson['data'][0];
+        accesoCliente(rol)
+        //return json
+    }
+}
+
+getVerifiedCliente();
+
+function accesoCliente(rolUser){
+    permisoUsuario = permisos[rolUser.nombre];
+    cliente.push(permisoUsuario["cliente"].includes('crear'));//0
+    cliente.push(permisoUsuario["cliente"].includes('eliminar'));//1
+    cliente.push(permisoUsuario["cliente"].includes('actualizar'));//2
+    cliente.push(permisoUsuario["cliente"].includes('leer'));//3
+    cliente.push(permisoUsuario["cliente"].includes('autorizar'));//4
+    // console.log( permisoUsuario["cliente"].includes('update'));
+
+}
 
 //  tabla
 
@@ -50,7 +85,11 @@ async function tableClientes(){
         buttonDelete.addEventListener('click',confirmDelete)
         buttonUpdate.addEventListener('click',updateDatos)
         // agrego boton a las columna
-        actions.append(buttonDelete,buttonUpdate)
+        console.log(cliente);
+        let btnU =  buttonUpdate;
+        let btnD =  buttonDelete
+
+        actions.append(btnD,btnU);
         // agrego las columnas a la fila
         fila.append(nombre,telefono,actions);
         // agrego las fila a la columna
@@ -85,3 +124,9 @@ function recargarDataFormClientEdit(data,fields=[]){
 
 // 
 
+// function verificarAcceso(modul,action){
+//     if(permisoUsuario){
+//         return permisoUsuario[modul].includes(action)
+//     }
+// }
+// permisoUsuario ? verificarAcceso('cliente','crear'): null

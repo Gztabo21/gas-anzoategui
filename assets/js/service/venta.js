@@ -6,6 +6,7 @@ let producto ;
 let precioProducto = 0.00 ;
 let total = 0.00;
 moment.locale('es');
+let venta = []
  
 const itemVenta = document.getElementById('itemVenta');
  
@@ -16,6 +17,39 @@ const banIcon = document.createElement('i');
    banIcon.className ="lni lni-ban";
 //end icon
 // inicial
+
+async function getVerifiedVentas(){
+    // model en minusculas y singular. ejemplo: usuario
+    let url = `controller/usuario.php?id=${localStorage.getItem('auth')}`;
+    
+    const resp = await fetch(url);
+    let json = await resp.json();
+
+    if(resp.ok){
+        usuario = json['data'][0];
+        let url_rol = `controller/rol.php?id=${usuario.rol_id}`;
+        const respDos = await fetch(url_rol);
+        let rolJson = await respDos.json();
+        let rol = rolJson['data'][0];
+        accesoVentas(rol)
+        //return json
+    }
+}
+
+getVerifiedVentas();
+
+function accesoVentas(rolUser){
+    permisoUsuario = permisos[rolUser.nombre];
+    venta.push(permisoUsuario["venta"].includes('crear'));//0
+    venta.push(permisoUsuario["venta"].includes('eliminar'));//1
+    venta.push(permisoUsuario["venta"].includes('actualizar'));//2
+    venta.push(permisoUsuario["venta"].includes('leer'));//3
+    venta.push(permisoUsuario["venta"].includes('autorizar'));//4
+    console.log(venta);
+    // console.log( permisoUsuario["venta"].includes('update'));
+
+}
+
  
 const productSelected = async (e) =>{
    let tipoVenta = document.querySelector("#select-listaPrecio");
@@ -31,8 +65,10 @@ const productSelected = async (e) =>{
    // console.log(precioProducto);
    qty.value = 1;
    precioProducto = listaPrecio['data'][0].precio;
-   precioNew.textContent = listaPrecio['data'][0].precio;
-   subtotal.textContent = listaPrecio['data'][0].precio;
+   precioNew.value = listaPrecio['data'][0].precio;
+   precioNew.textContent = company.moneda+ " " +listaPrecio['data'][0].precio;
+   subtotal.value = listaPrecio['data'][0].precio;
+   subtotal.textContent =company.moneda+ " " +listaPrecio['data'][0].precio;
  
 }
 //validacion de numero
@@ -60,7 +96,10 @@ select.addEventListener('change',productSelected)
 const onChangeQty = (event)=>{
    let subtotal = document.getElementById('subtotal');
    let precioNew = document.getElementById('precio_new');
-   subtotal.textContent = eval(event.target.value * precioNew.textContent );
+   subtotal.value = eval(event.target.value * precioNew.value );
+   subtotal.textContent = company.moneda + " " +subtotal.value;
+
+   console.log(precioNew);
 }
  
 const qty  = document.createElement('input');
@@ -73,7 +112,7 @@ async function getProductos(){
    let isGranel = document.querySelector('#granel-venta');
    const {data} = await getAll('producto');
    let boolean = {0:false,1:true}
-   console.log(data);
+//    console.log(data);
    productos = data
    productos.forEach( p=>{
        if(boolean[p.isGranel]===isGranel.checked){       
@@ -119,16 +158,19 @@ const confirmItem = () =>{
    name.textContent = producto.nombre;
    name.productoId = producto.productoId;
    cantidad.textContent = qty.value;
-   precio.textContent = precioNew.textContent;
-   subTotal.textContent = subtotal.textContent;
-   buttonDelete.amount = subtotal.textContent;
+   cantidad.value = qty.value;
+   precio.value = precioNew.value;
+   precio.textContent = company.moneda + " " + precioNew.value;
+   subTotal.value = subtotal.value;
+   subTotal.textContent = company.moneda + " " + subtotal.value;
+   buttonDelete.amount = subtotal.value;
    actionbtn.append(buttonDelete);
    fila.append(name,cantidad,precio,subTotal,actionbtn)
    itemVenta.append(fila);
    idFila =idFila+1;
    let filad = document.getElementById('edited');
    filad.remove();
-   updateTotal(subtotal.textContent,'+');
+   updateTotal(subtotal.value,'+');
    qty.value = 1;
   
  
@@ -145,7 +187,8 @@ const deleteItem = () =>{
 function updateTotal(amount , operador){
    total = eval( `${amount}${operador} ${total}`);
    let totalA = document.querySelector("#amount");
-   totalA.textContent = total < 0 ? (-1 * total) : total;
+   totalA.textContent = total < 0 ?company.moneda+" "+ (-1 * total) : company.moneda+" "+total;
+   totalA.value = total < 0 ?(-1 * total) :total;
 }
  
 function newItem(){
@@ -181,8 +224,10 @@ function newItem(){
        cantidad.append(qty);
  
        precio.id="precio"+"_new";//append(input_precio);
-       precio.textContent = precioProducto;
-       subTotal.textContent = precioProducto;
+       precio.textContent = company.moneda+ " " +precioProducto;
+       precio.value = precioProducto;
+       subTotal.value = precioProducto;
+       subTotal.textContent = company.moneda+ " " +precioProducto;
       
        fila.append(name,cantidad,precio,subTotal,actionbtn);
        itemVenta.append(fila);
@@ -211,7 +256,8 @@ function getData(){
                    row[nameCol[y]] = parseInt(parent[i].children[y].productoId)
  
                }else{
-                   row[nameCol[y]] = parseInt(parent[i].children[y].innerHTML)
+                //    console.log(parent[i].children[y]);
+                   row[nameCol[y]] = parseInt(parent[i].children[y].value);
                   
                }
            } 
@@ -220,7 +266,8 @@ function getData(){
  
    }
    let order  = {"items":item,"refPago":refPago.value ? refPago.value:"N/A","isGranel":isGranel.value ? 1 : 0,"tipoOrder":tipoOrder.value,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":total}
-        sendDataItem(order);
+   console.log(order);     
+   sendDataItem(order);
  
 }
  
@@ -266,6 +313,7 @@ async function confPedido(id, model){
 async function tableVentas(){
    let table = d.getElementById('Ventas');
    let ventas = await getAll('ventas');
+
        //fila.className = "form-select"
    ventas.data.forEach( async p=>{
        //crear button
@@ -316,7 +364,11 @@ async function tableVentas(){
        buttonUpdate.dataValue = "ventas-form";
        actions.className="btns-actions";
        // agrego boton a las columna 
-       actions.append(buttonDelete,buttonUpdate,buttonAuthorizar)
+       console.log(venta[1],venta[2],venta[4])
+       let btnD =venta[1] ? buttonDelete:" " ;
+       let btnU = venta[2] ? buttonUpdate : " " 
+       let btnAut = venta[4] ? buttonAuthorizar: " ";
+       actions.append(btnD, btnU , btnAut)
        // agrego las columnas a la fila
        fila.append(pedido_id,cliente_id,estado,total,fecha,actions);
        // agrego las fila a la columna
@@ -352,6 +404,7 @@ function loadDataSelectTipoVenta(data){
 }
  
 async function initial(){
+   console.log(company)
    check = document.querySelector('#granel-venta');
    datos = await getTipoVenta(check.checked,'tipoVenta');
    loadDataSelectTipoVenta(datos)

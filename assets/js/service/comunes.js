@@ -1,3 +1,6 @@
+let usuario;
+let rol;
+let permisoUsuario 
 // consultar todos los datos
 async function getAll(model){
     // model en minusculas y singular. ejemplo: usuario
@@ -18,6 +21,8 @@ async function get(id,model){
         return json
     }
 }
+
+
 async function getTipoVenta(istrue,model){
     // model en minusculas y singular. ejemplo: usuario
     let url = `controller/${model}.php?isGranel=${istrue}`;
@@ -142,3 +147,4 @@ async function respaldoDDBB(){
         window.open(url, 'Download');
     }
 }
+
