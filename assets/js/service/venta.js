@@ -239,9 +239,10 @@ function newItem(){
 // construir data a enviar a la PHP y luego DDBB
 function getData(){
    let parent = itemVenta.children;
-   let nameCol = {0:"producto_id",1:"cantidad",2:"precio_unitario",3:"total"}
+   let nameCol = {0:"producto_id",1:"cantidad",2:"precio_unitario",3:"total",4:"item_id"}
    let item = [];
    let selectClient = document.querySelector("#select-client");
+   let pedido_id = document.querySelector("#pedido_id");
    let selectPago = document.querySelector("#select-tipoPago");
    let isGranel = document.querySelector("#granel-venta");
    let tipoOrder = document.querySelector("#select-listaPrecio");
@@ -249,7 +250,7 @@ function getData(){
   
    for(let i = 0 ; i <= parent.length-1 ; i++){
  
-       let row = {"producto_id":null,"cantidad":null,"precio_unitario":null,"total":null};
+       let row = {"producto_id":null,"cantidad":null,"precio_unitario":null,"total":null,"item_id":null};
        for(let y=0; y <= parent[i].children.length -1 ; y++ ){
            if(parent[i].children[y].children.length == 0){
                if(parent[i].children[y].productoId){
@@ -260,14 +261,22 @@ function getData(){
                    row[nameCol[y]] = parseInt(parent[i].children[y].value);
                   
                }
+               
+            //    if(document.querySelector()){
+
+            //    }
            } 
        }
+       if(parent[i].name == "item_id"){
+          row[parent[i].name]=parseInt(parent[i].value);
+       }
+       
        item.push(row);
  
    }
-   let order  = {"items":item,"refPago":refPago.value ? refPago.value:"N/A","isGranel":isGranel.value ? 1 : 0,"tipoOrder":tipoOrder.value,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":total}
+   let order  = {"items":item,"refPago":refPago.value ? refPago.value:"N/A","isGranel":isGranel.value ? 1 : 0,"tipoOrder":tipoOrder.value,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":total,"pedido_id": pedido_id.value > 0 ? pedido_id.value : 0}
    console.log(order);     
-   sendDataItem(order);
+  sendDataItem(order);
  
 }
  
@@ -283,9 +292,9 @@ async function sendDataItem(order){
        }
    })
    // let json = await resp.json()
-   if(resp.ok){
-       window.location.href=`./?p=ventas`;
-   }
+//    if(resp.ok){
+//        window.location.href=`./?p=ventas`;
+//    }
 }
  
 // confirmar las venta
@@ -313,7 +322,7 @@ async function confPedido(id, model){
 async function tableVentas(){
    let table = d.getElementById('Ventas');
    let ventas = await getAll('ventas');
-
+   let rol = await get(parseInt(localStorage.getItem('rol')),'rol');
        //fila.className = "form-select"
    ventas.data.forEach( async p=>{
        //crear button
@@ -346,9 +355,9 @@ async function tableVentas(){
       
        cliente_id.textContent = `${cliente['data'][0].nombre} ${cliente['data'][0].apellido}` ;
        estado.textContent = p.status == 1 ? "valido" :"pendiente";
-       estado.className =  p.status ? "pendiente" :"Valido";
+       estado.className =  p.status == 1 ? "badge bg-success" :"badge bg-danger";
  
-       total.textContent = p.total ;
+       total.textContent = `${company.moneda} ${p.total} ` ;
        fecha.textContent = moment(p.fecha).format("MMM DD YYYY");
        buttonDelete.id = p.pedido_id;
        buttonAuthorizar.id = p.pedido_id;
@@ -404,7 +413,6 @@ function loadDataSelectTipoVenta(data){
 }
  
 async function initial(){
-   console.log(company)
    check = document.querySelector('#granel-venta');
    datos = await getTipoVenta(check.checked,'tipoVenta');
    loadDataSelectTipoVenta(datos)
@@ -423,24 +431,30 @@ function recargarFormVenta(data){
     let table = d.getElementById('itemVenta');
     let pedido = data['pedido'][0];
    console.log(pedido);
-   console.log(data['items']);
+//    console.log(data['items']);
    let cliente = document.getElementById('select-client');
+   let pedido_id = document.getElementById('pedido_id');
    let tipoPago = document.getElementById('select-tipoPago');
    let granelVenta = document.getElementById('granel-venta');
    let refPago = document.getElementById('refPago');
    let tipo_ventaId = document.getElementById('select-listaPrecio');
    let totalA = document.querySelector("#amount");
-   totalA.textContent = pedido['total'];
 
+   totalA.textContent = pedido['total'];
+   total = pedido['total'];
    cliente.value = pedido['cliente_id'];
    tipoPago.value = pedido['tipo_pago_id'];
    granelVenta.value = pedido['isGranel']== 0 ? false :true;
    refPago.value = pedido['refPago']
    tipo_ventaId.value = pedido['tipo_ventaId']
+   pedido_id.value = pedido['pedido_id']
 
 //    console.log(total);
     data['items'].forEach(r=>{
+        console.log(r);
         let fila = document.createElement('tr')
+        fila.name ="item_id";
+        fila.value= r.item_id;
 
         let name = document.createElement('td')
         let cantidad = document.createElement('td')
@@ -457,9 +471,13 @@ function recargarFormVenta(data){
   
         actionbtn.append(btnStop)
          name.textContent = r.productoId;
+         name.value = r.productoId;
          cantidad.textContent = r.cantidad;
-         precio.textContent = r.precio_unitario;
+         cantidad.value = r.cantidad;
+         precio.textContent = `${company.moneda} ${r.precio_unitario}`;
+         precio.value = r.precio_unitario;
          subTotal.textContent = r.total;
+         subTotal.value = r.total;
   
        
         fila.append(name,cantidad,precio,subTotal,actionbtn);
@@ -468,7 +486,6 @@ function recargarFormVenta(data){
 }
 //
 async function editFormVenta(){
-   console.log('cargue')
    let regexv2= /[=]/gm
    let nwTexto = consultarRuta();
  

@@ -47,17 +47,28 @@ class Pedido extends Conexion{
         return $request;
     }
     
-    // public function update(int $id , string $nombre_completo, int $cedula, string $email  ){        
-    //     $this->nombre_completo = $nombre_completo;
-    //     $this->cedula = $cedula;
-    //     $this->email = $email;
+    public function update(int $id ,int $cliente_id,int $tipo_pago_id, int $total,array $items,int $isGranel,int $tipo_ventaId, string $refPAgo  ){        
+        $this->cliente_id = $cliente_id;
+        $this->tipo_pago_id = $tipo_pago_id;
+        $this->total =$total;
+        $this->isGranel = $isGranel;
+        $this->tipo_ventaId = $tipo_ventaId;
+        $this->items_ids = $items;
 
-    //     $sql= "UPDATE usuario SET nombre_completo=?,cedula=?,email=? where usuario_id=$id";
-    //     $update = $this->conexion->prepare($sql);
-    //     $arrData = array($this->nombre_completo,$this->cedula,$this->email);
-    //     $exe = $update->execute($arrData);
-    //     return $exe;
-    // }
+        $sql= "UPDATE pedido  SET cliente_id=?, tipo_pago_id=?, total=?,isGranel=?,tipo_ventaId=?,refPago=? where pedido_id=$id";
+        $update = $this->conexion->prepare($sql);
+        $arrData = array($this->cliente_id,$this->tipo_pago_id,$this->total,$this->isGranel,$this->tipo_ventaId,$refPAgo);
+        $exe = $update->execute($arrData);
+
+        // $sqlItems = "UPDATE pedido_item set productoId=?,cantidad=?, precio_unitario=?, total=? where item_id=?";
+        // $updateItems = $this->conexion->prepare($sqlItems);
+        // foreach ($items as $key => $value) {
+        //     $arr = array($value->{'producto_id'},$value->{'cantidad'},$value->{'precio_unitario'},$value->{'total'});
+        //     $exe = $updateItems->execute($arr);
+        // }
+
+        return array("message"=>"registro guardado correctamente", "code"=>200);
+    }
 
     public  function findOne(int $id){
         $sql="SELECT * FROM pedido where pedido_id=?";

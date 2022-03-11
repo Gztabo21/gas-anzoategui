@@ -74,6 +74,7 @@ async function validarForm(e){
         //this.reset();
         console.log(json)
         window.localStorage.setItem('auth', json.id);
+        window.localStorage.setItem('rol', json.rol_id);
 
         window.location.href="http://localhost/gas-anzoategui/?p=ventas"
     }

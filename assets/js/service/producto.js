@@ -41,7 +41,7 @@ async function tableProduct(){
         let actions = d.createElement('td');
         // asigno valores de Base de datoas a las columnas
         nombre.textContent = p.nombre ;
-        peso.textContent = p.peso ;
+        peso.textContent = `${p.peso} ${p.unidadMetrica}` ;
         precioUnitario.textContent = p.precioUnitario ;
         buttonDelete.id = p.productoId;
         buttonUpdate.id = p.productoId;

@@ -1,3 +1,13 @@
+
+<div class="container-fluid" style="margin:1rem auto;" >
+<div class="row" >
+  <div class="col-6" >
+  <a  href="?p=ventas" class="btn btn-primary"><i class="lni lni-chevron-left" ></i> &nbsp;Volver</a>
+
+  </div>
+</div>
+</div>
+
 <div class="row">
 <div class="col-lg-12">
                 <div class="form-wrapper">

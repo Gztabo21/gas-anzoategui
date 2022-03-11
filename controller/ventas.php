@@ -22,9 +22,16 @@ function post(){
     $post = file_get_contents('php://input');
     $json =json_decode($post);
     $Pedido = new Pedido();
-    $resp = $Pedido->insertPedido($json->{'Cliente_id'},$json->{'tipo_pago'},$json->{'total'},$json->{'items'},$json->{'isGranel'},$json->{'tipoOrder'},$json->{'refPago'});
-    http_response_code($resp['code']);
-    echo json_encode(['data'=>$resp]);
+    if($json->{'pedido_id'} == 0 ){
+        $resp = $Pedido->insertPedido($json->{'Cliente_id'},$json->{'tipo_pago'},$json->{'total'},$json->{'items'},$json->{'isGranel'},$json->{'tipoOrder'},$json->{'refPago'});
+        http_response_code($resp['code']);
+        echo json_encode(['data'=>$resp]);
+    }else{
+        $resp = $Pedido->update($json->{'pedido_id'},$json->{'Cliente_id'},$json->{'tipo_pago'},$json->{'total'},$json->{'items'},$json->{'isGranel'},$json->{'tipoOrder'},$json->{'refPago'});
+        http_response_code($resp['code']);
+        echo json_encode(['data'=>$resp]);
+    }
+    
     //echo('items'.$json->{'items'}.'cliente:'.$json->{'Cliente_id'}.'tipo_pago'.$json->{'tipo_pago'}.'total:'.$json->{'total'});
 }
 

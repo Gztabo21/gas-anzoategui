@@ -26,7 +26,7 @@ class auth extends Conexion{
         if(isset($datos)&& !empty($datos) && sizeof($datos) > 0){
             foreach($datos as $usuario){
 
-                $response = $usuario['contrasena'] == $this->pw ? array("message"=>"Bienvenido al sistema", "code"=>200,"id"=>$usuario['usuario_id']) : $msg_incorrect; 
+                $response = $usuario['contrasena'] == $this->pw ? array("message"=>"Bienvenido al sistema", "code"=>200,"id"=>$usuario['usuario_id'],"rol_id" =>$usuario['rol_id']) : $msg_incorrect; 
             }
         }else{
             $response = $msg_incorrect;
