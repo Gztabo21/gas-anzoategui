@@ -27,6 +27,17 @@
                           <input type="text" name="cedula" id="cedula" placeholder="cedula" />
                         </div>
                       </div>
+                      <!-- <div class="col-12">
+                        <div class="input-style-1">
+                          <select class="form-select" name="rol_id" id="rol_id" aria-label="Default select example">
+                            <option selected>tipo de usuario</option>
+                            <option value="1">Administrador</option>
+                            <option value="3">Super Usuario</option>
+                            <option value="4">Normal</option>
+                          </select>
+                        </div>
+                      </div>
+                       -->
                       <!-- end col -->
                       <div class="col-12">
                         <div class="input-style-1">
