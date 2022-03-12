@@ -1,3 +1,11 @@
+<div class="container-fluid" style="margin:1rem auto;" >
+<div class="row" >
+  <div class="col-6" >
+  <a  href="?p=producto" class="btn btn-primary"><i class="lni lni-chevron-left" ></i> &nbsp;Volver</a>
+
+  </div>
+</div>
+</div>
 <div class="form-wrapper">
                   <form action="./controller/producto.php" method="POST" id="formProduct" >
                   <input type="hidden" id="productoId" name="productoId" />
