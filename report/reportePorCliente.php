@@ -45,9 +45,18 @@ if( $desde !== "vacio" && $hasta !== "vacio" ){
     $pdf = new FPDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial','B',10);
-    $pdf->Header();
+    // header
+    $pdf->ln();
+    //var_dump(getcwd());// nombre de la ruta actual
+    //var_dump(dirname(__DIR__)); // nombre de la ruta actual __filename__ ; __DIR__ carpeta donde se encuentra el proyecto
+    // basename(getcwd()); se usa para el nombre actual de la carpet o ruta 
+    $pdf->Image(dirname(__DIR__)."/assets/images/logo/logo.png",10,12,30,0,'');
+    $pdf->Cell(190,8,' GAS ANZOATEGUI ',0,10,'C');
+    $pdf->ln();
+    $pdf->ln();
     $pdf->ln();
     // $pdf->ImprovedTable($header,$data);
+
     $pdf->Cell(190,8,'Reporte de Ventas',1,10,'C');
     $pdf->ln();
     $pdf->Cell(38,7,'Cliente: '.strtoupper($nombreCliente),0,0,'C');
