@@ -154,12 +154,12 @@ function getDataListaPrecio(){
         for(let y=0; y <= parent[i].children.length -1 ; y++ ){
 
             if(parent[i].children[y].children.length > 0){
-                console.log(nameCol[y]);
+                //console.log(nameCol[y]);
               
-                    row[nameCol[y]] = parseInt(parent[i].children[y].children[0].value)
+                    row[nameCol[y]] = parseFloat(parent[i].children[y].children[0].value)
         
             }else{
-                row[nameCol[y]] = parseInt(parent[i].children[y].id);
+                row[nameCol[y]] = parseFloat(parent[i].children[y].id);
                 
             }
         }
@@ -196,7 +196,7 @@ async function submitFormProducto(e){
         "granel":granel,
         "listaPrecio":listaPrecio
     }
-    console.log(product)
+    //console.log(product)
     const resp = await fetch("./controller/producto.php",{
         method:"POST",
         body: JSON.stringify(product),

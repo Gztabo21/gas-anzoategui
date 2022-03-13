@@ -96,10 +96,8 @@ select.addEventListener('change',productSelected)
 const onChangeQty = (event)=>{
    let subtotal = document.getElementById('subtotal');
    let precioNew = document.getElementById('precio_new');
-   subtotal.value = eval(event.target.value * precioNew.value );
+   subtotal.value = parseFloat(eval(event.target.value * precioNew.value )).toFixed(2);
    subtotal.textContent = company.moneda + " " +subtotal.value;
-
-   console.log(precioNew);
 }
  
 const qty  = document.createElement('input');
@@ -137,6 +135,8 @@ function confirmDeleteItemVenta(e){
 const confirmItem = () =>{
    let subtotal = document.getElementById('subtotal');
    let precioNew = document.getElementById('precio_new');
+   let ventasProductos = document.querySelector('#ventas-productos');
+   ventasProductos.innerHTML= "";
  
    let buttonDelete = d.createElement('button');
    buttonDelete.className ="btn btn-danger";
@@ -185,10 +185,10 @@ const deleteItem = () =>{
 }
  
 function updateTotal(amount , operador){
-   total = eval( `${amount}${operador} ${total}`);
+   total = eval( `${amount}${operador} ${parseFloat(total).toFixed(2)}`);
    let totalA = document.querySelector("#amount");
-   totalA.textContent = total < 0 ?company.moneda+" "+ (-1 * total) : company.moneda+" "+total;
-   totalA.value = total < 0 ?(-1 * total) :total;
+   totalA.textContent = total < 0 ?company.moneda+" "+ (-1 * parseFloat(total).toFixed(2)) : company.moneda+" "+parseFloat(total).toFixed(2);
+   totalA.value = total < 0 ?(-1 * parseFloat(total).toFixed(2)) :parseFloat(total).toFixed(2);
 }
  
 function newItem(){
@@ -247,7 +247,7 @@ function getData(){
    let isGranel = document.querySelector("#granel-venta");
    let tipoOrder = document.querySelector("#select-listaPrecio");
    let refPago = document.querySelector("#refPago");
-  
+if( parent.length > 0){
    for(let i = 0 ; i <= parent.length-1 ; i++){
  
        let row = {"producto_id":null,"cantidad":null,"precio_unitario":null,"total":null,"item_id":null};
@@ -258,13 +258,10 @@ function getData(){
  
                }else{
                 //    console.log(parent[i].children[y]);
-                   row[nameCol[y]] = parseInt(parent[i].children[y].value);
+                   row[nameCol[y]] = parseFloat(parent[i].children[y].value);
                   
                }
-               
-            //    if(document.querySelector()){
 
-            //    }
            } 
        }
        if(parent[i].name == "item_id"){
@@ -274,9 +271,13 @@ function getData(){
        item.push(row);
  
    }
-   let order  = {"items":item,"refPago":refPago.value ? refPago.value:"N/A","isGranel":isGranel.value ? 1 : 0,"tipoOrder":tipoOrder.value,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":total,"pedido_id": pedido_id.value > 0 ? pedido_id.value : 0}
-   console.log(order);     
-  sendDataItem(order);
+   let order  = {"items":item,"refPago":refPago.value ? refPago.value:"N/A","isGranel":isGranel.value ? 1 : 0,"tipoOrder":tipoOrder.value,"Cliente_id":parseInt(selectClient.value),"tipo_pago":parseInt(selectPago.value),"total":parseFloat(total).toFixed(2),"pedido_id": pedido_id.value > 0 ? pedido_id.value : 0}
+   //console.log(order);  
+   sendDataItem(order);
+}else{
+    console.log('sin items')
+    alert('No puede confirmar la venta sin un item.'); 
+}   
  
 }
  
@@ -291,10 +292,10 @@ async function sendDataItem(order){
            'Content-Type': 'application/json'
        }
    })
-   // let json = await resp.json()
-//    if(resp.ok){
-//        window.location.href=`./?p=ventas`;
-//    }
+   let json = await resp.json()
+   if(resp.ok){
+       window.location.href=`./?p=ventas`;
+   }
 }
  
 // confirmar las venta
@@ -394,7 +395,7 @@ if(d.getElementById('Ventas')) tableVentas()
 async function changeGradielVenta(e){
    let selVenta = document.querySelector('#select-listaPrecio')
    let ventasProductos = document.querySelector('#ventas-productos');
-   console.log(ventasProductos);
+   ventasProductos.innerHTML= "";
    selVenta.innerHTML = ''; // limpia los nodos hijos
    datos = await getTipoVenta(e.target.checked,'tipoVenta');
    loadDataSelectTipoVenta(datos)

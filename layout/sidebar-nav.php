@@ -44,7 +44,7 @@
             </a>
           </li>
           <span class="divider"><hr /></span>
-          <li class="nav-item  <?php echo $pagina == 'informe' ? 'nav-item-has-children' : '' ?>">
+          <!-- <li class="nav-item  <?php echo $pagina == 'informe' ? 'nav-item-has-children' : '' ?>">
             <a
               href="#0"
               class="collapsed"
@@ -67,15 +67,15 @@
                 <a href="?p=informe"> Reporte </a>
               </li>
             </ul>
-          </li>
-          <!-- <li class="nav-item  ">
+          </li> -->
+          <li class="nav-item <?php echo $pagina == 'informe' ? 'nav-item-has-children' : '' ?> ">
             <a href="?p=informe">
               <span class="icon">
               <i class="lni lni-empty-file"></i>
               </span>
               <span class="text">Informe</span>
             </a>
-          </li> -->
+          </li>
           <li class="nav-item  <?php echo $pagina == 'usuarios' ? 'active' : '' ?>">
             <a href="?p=usuario">
               <span class="icon">

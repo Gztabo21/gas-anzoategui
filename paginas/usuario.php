@@ -23,7 +23,7 @@
                         </th>
                         <th class='min-width'>
                           <h6 class='text-sm text-medium'>
-                            Telefono
+                            Correo
                           </h6>
                         </th>
                       

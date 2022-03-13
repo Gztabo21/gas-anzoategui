@@ -16,7 +16,7 @@ class Pedido extends Conexion{
         $this->conexion =  $this->conexion->connect();  
     }
 
-    public function insertPedido(int $cliente_id,int $tipo_pago_id, int $total,array $items,int $isGranel,int $tipo_ventaId, string $refPAgo){
+    public function insertPedido(int $cliente_id,int $tipo_pago_id, float $total,array $items,int $isGranel,int $tipo_ventaId, string $refPAgo){
         $this->cliente_id = $cliente_id;
         $this->tipo_pago_id = $tipo_pago_id;
         $this->total =$total;
@@ -47,7 +47,7 @@ class Pedido extends Conexion{
         return $request;
     }
     
-    public function update(int $id ,int $cliente_id,int $tipo_pago_id, int $total,array $items,int $isGranel,int $tipo_ventaId, string $refPAgo  ){        
+    public function update(int $id ,int $cliente_id,int $tipo_pago_id, float $total,array $items,int $isGranel,int $tipo_ventaId, string $refPAgo  ){        
         $this->cliente_id = $cliente_id;
         $this->tipo_pago_id = $tipo_pago_id;
         $this->total =$total;

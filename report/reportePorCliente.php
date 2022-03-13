@@ -99,7 +99,7 @@ if( $desde !== "vacio" && $hasta !== "vacio" ){
             $pdf->Cell(48,6,$value['NombreProducto'],1,0,"C");
             $pdf->Cell(28,6,$value['cantidad'],1,0,'C');
             $pdf->Cell(20,6,"Bs. ".$value['precio'],1,0,'C');
-            $pdf->Cell(38,6,number_format($value['total']),1,0,'C');
+            $pdf->Cell(38,6,number_format($value['total'], 2, '.', ''),1,0,'C');
             $total= $value['total'] + $total;
             $pdf->Ln();
         }
@@ -108,8 +108,8 @@ if( $desde !== "vacio" && $hasta !== "vacio" ){
             $pdf->Cell(28,6,"",0);
             $pdf->Cell(48,6,"",0);
             $pdf->Cell(28,6,"",0,0,'R');
-            $pdf->Cell(20,6,"",0,0,'R');
-            $pdf->Cell(38,6,"Total: "."Bs. ".number_format($total),1,0,'C');
+            $pdf->Cell(20,6,"Total",1,0,'C');
+            $pdf->Cell(38,6,"Bs. ".number_format($total, 2, '.', ''),1,0,'C');
         // total
     }
 //  fin tablas de un cliente especifico.
@@ -135,7 +135,7 @@ if( $desde !== "vacio" && $hasta !== "vacio" ){
             $pdf->Cell(28,6,$value['NombreProducto'],1,0,"C");
             $pdf->Cell(28,6,$value['cantidad'],1,0,'C');
             $pdf->Cell(20,6,$value['precio'],1,0,'C');
-            $pdf->Cell(28,6,"Bs. ".number_format($value['total']),1,0,'C');
+            $pdf->Cell(28,6,"Bs. ".number_format($value['total'], 2, '.', ''),1,0,'C');
             $total= $value['total'] + $total;
             $pdf->Ln();
         }
@@ -145,8 +145,8 @@ if( $desde !== "vacio" && $hasta !== "vacio" ){
             $pdf->Cell(28,6,"",0);
             $pdf->Cell(28,6,"",0);
             $pdf->Cell(28,6,"",0,0,'R');
-            $pdf->Cell(20,6,"",0,0,'R');
-            $pdf->Cell(28,6,"Total: "."Bs. ".number_format($total),1,0,'C');
+            $pdf->Cell(20,6,"Total",1,0,'C');
+            $pdf->Cell(28,6,"Bs. ".number_format($total, 2, '.', ''),1,0,'C');
         // total
     }
     // fin  tablas de todos los clientes
