@@ -34,14 +34,23 @@ echo"<h2>Informes de Ventas</h2>";?>
 <!-- por Clientes -->
 
 <div class="row" >
-    <div class="col-4">
+    <!-- <div class="col-4">
         <div class="input-style-1">
             <select id="select-client" name="select-client" selectedIndex="0">
                 <option value="#"> Selecciona un Cliente</option>
             </select>
         </div>
-    </div>    
+    </div>     -->
     <div class="col-4">
+        <div class="input-style-1">
+        <label>Cliente:</label>
+        <input type="text" name="client" id="cliente" onKeyup="searchByCedula(event)" autocomplete="off" onClick="cleanResultComplete(event)" />
+        <input type="hidden" name="select-client" id="valueClient" value="#" onKeyup="searchByCedula(event)" />
+        <ul id="resultCompletado" >
+
+        </ul>
+        </div>
+    </div> 
     <!-- <div class="input-style-1">
         <label>Hasta:</label>
         <input type="date" name="hasta" id="Hasta" />
@@ -50,7 +59,7 @@ echo"<h2>Informes de Ventas</h2>";?>
     <div class="col-4">
     <div class="button-group d-flex justify-content-center flex-wrap">
         <p></p>
-        <input type="submit" value="Consultar"  class="btn btn-primary"/>
+        <input type="submit" value="Consultar" id="consulta" class="btn btn-primary"/>
     </div>
     </div>    
 <div>

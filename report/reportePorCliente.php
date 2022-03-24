@@ -59,7 +59,7 @@ if( $desde !== "vacio" && $hasta !== "vacio" ){
 
     $pdf->Cell(190,8,'Reporte de Ventas',1,10,'C');
     $pdf->ln();
-    $pdf->Cell(38,7,'Cliente: '.strtoupper($nombreCliente),0,0,'C');
+    $pdf->Cell(38,7,'Cliente: '.strtoupper(utf8_decode($nombreCliente)),0,0,'C');
     $pdf->Cell(38,7,'','',0,'C');
     $pdf->Cell(38,7,'','',0,'C');
     $pdf->Cell(38,7,'FECHA: '.''.date('M d  Y  ').'','B',0,'C');

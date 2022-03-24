@@ -11,7 +11,7 @@ async function selectClient(){
    selectClient.className ="form-select";
         data.data.forEach( p=>{
             let option = document.createElement('option');
-            option.textContent = p.nombre + ' ' + p.apellido;
+            option.textContent = p.cedula+' - '+p.nombre + ' ' + p.apellido;
             option.value = p.cliente_id;
             selectClient.append(option);
         })
@@ -87,7 +87,7 @@ async function tableClientes(){
         // agrego boton a las columna
         console.log(cliente);
         let btnU =  buttonUpdate;
-        let btnD =  buttonDelete
+        let btnD =  buttonDelete;
 
         actions.append(btnD,btnU);
         // agrego las columnas a la fila

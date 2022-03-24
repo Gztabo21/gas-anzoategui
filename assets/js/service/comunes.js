@@ -148,3 +148,54 @@ async function respaldoDDBB(){
     }
 }
 
+async function searchByCedula(e){
+    // los numeros
+    // 48-57 para keypress && para 96-105 para keydown &key up
+    // delete = 46
+    // backspace 8
+     let clients = await getAll('cliente');
+    if(e.keyCode >= 96 && e.keyCode <= 105 || e.keyCode === 8 || e.keyCode === 46){
+        // filtrar data
+        if( e.keyCode !== 8 && e.keyCode !== 46 ) autoComplete(clients.data,e.target.value)
+    } else{
+        alert('solo numeros');
+        e.target.value =""
+    }
+}
+function autoComplete (data,key) {
+const resultElem = document.querySelector("#resultCompletado"); 
+resultElem.className="activeCompletado";
+let itemNull = document.createElement('li');
+itemNull.textContent = " No hay resultados"
+const  result = data.filter(e=>{
+            return e.cedula.startsWith(key)
+        })
+    resultElem.innerHTML = "";
+    if (result.length === 0 ) resultElem.append(itemNull);
+    result.forEach( r =>{
+        
+        let item = document.createElement('li');
+        item.addEventListener('click',seleccionarItem)
+        item.IdCliente = r.cliente_id;
+        item.textContent = `${r.cedula} - ${r.nombre} ${r.apellido}`
+        resultElem.append(item)
+    })
+    
+
+}
+function seleccionarItem (ev){
+    const resultElem = document.querySelector("#resultCompletado"); 
+    resultElem.className="";
+    let cliente = document.querySelector("#cliente");
+    let valueClient = document.querySelector("#valueClient");
+    // console.log(ev.target);
+    valueClient.value = ev.target.IdCliente;
+    cliente.value = ev.target.textContent;
+    resultElem.innerHTML=""
+}
+
+function cleanResultComplete(ev){
+    const resultElem = document.querySelector("#resultCompletado"); 
+    resultElem.innerHTML="";
+    resultElem.className="";
+}
